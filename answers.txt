@@ -1,0 +1,55 @@
+Binary search
+=============
+
+**Question**
+How many comparisons does firstIndexOf use at most for an array of:
+a) 10 elements?
+b) 100 elements?
+c) 1,000 elements?
+d) 1,000,000 elements?
+
+Hint: You can count the comparisons using a debugger to step through your program line-by-line.
+
+TODO
+
+**Question**
+How many comparisons would firstIndexOf need for 1,000,000,000,000 elements?
+(This is way too big for your computer's memory!)
+Justify your answer.
+
+TODO
+
+Appendix: general information
+=============================
+
+**Question**
+How many hours did you spend on the assignment?
+
+TODO
+
+**Questions**
+Which of the three spoilers did you use?
+
+TODO
+
+**Question**
+Do you know of any bugs or limitations?
+
+TODO
+
+**Question**
+Did you collaborate with any other students on this lab?
+If so, write with whom and in what way you collaborated.
+Also list any resources (including the web) you have used in creating your design.
+
+TODO
+
+**Question**
+Did you encounter any serious problems?
+
+TODO
+
+**Question**
+What is your feedback on this assignment?
+
+TODO
