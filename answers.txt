@@ -13,7 +13,7 @@ b) 100 elements?
 
 c) 1,000 elements?
 
- - 13 comparisons
+ - 10 comparisons
 
 d) 1,000,000 elements?
 
