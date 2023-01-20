@@ -4,20 +4,31 @@ Binary search
 **Question**
 How many comparisons does firstIndexOf use at most for an array of:
 a) 10 elements?
+
+ - 4 comparisons
+
 b) 100 elements?
+
+ - 7 comparisons
+
 c) 1,000 elements?
+
+ - 13 comparisons
+
 d) 1,000,000 elements?
 
-Hint: You can count the comparisons using a debugger to step through your program line-by-line.
+ - 20 comparisons
 
-TODO
+Hint: You can count the comparisons using a debugger to step through your program line-by-line.
 
 **Question**
 How many comparisons would firstIndexOf need for 1,000,000,000,000 elements?
 (This is way too big for your computer's memory!)
 Justify your answer.
 
-TODO
+ - 40 comparisons. The reason is that my implementation of firstIndexOf function has the complexity of worst-case of binary search O(logn).
+   We find the amount of times 2 must be multiplied by itself (i.e. the exponent of 2) to produce the smallest number greater than the number
+   of elements.
 
 Appendix: general information
 =============================
@@ -25,31 +36,52 @@ Appendix: general information
 **Question**
 How many hours did you spend on the assignment?
 
-TODO
+ - I spent around 3 hours on this assignment.
 
 **Questions**
 Which of the three spoilers did you use?
 
-TODO
+ - I used the spoilers but in all honesty I didn't need them as I already understand the concept of recursion. I only clicked the spoilers
+   because it seemed irresistible to click on a spoiler button.
 
 **Question**
 Do you know of any bugs or limitations?
 
-TODO
+ - I am not aware of any bugs in the code. A limitation would obviously be that these algorithms only work on sorted arrays.
 
 **Question**
 Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-TODO
+ - I didn't collaborate with anyone for the construction / desgn of my functions. However, I consulted Milad Tamaddondar and
+   Amirpooya Asadollahnejad on whether I had written the recursive function correctly / in the manner that was expected for the assignment.
+
 
 **Question**
 Did you encounter any serious problems?
 
-TODO
+ - No serious problems were encountered.
 
 **Question**
 What is your feedback on this assignment?
 
-TODO
+ - This was a fun assignment that got my brain working.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
