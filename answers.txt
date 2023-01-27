@@ -1,0 +1,208 @@
+################################################################################
+## Lab: Text indexing (java)                                                  ##
+################################################################################
+
+* Group members:
+[...]
+[...]
+[...]
+
+################################################################################
+## Task 1a: Insertion sort                                                    ##
+################################################################################
+
+* How many comparisons does insertion sort need to sort an array of
+  (a) 1,000 integers, (b) 10,000 integers, (c) 20,000 integers?
+
+[...]
+
+* How many comparisons per second does it make on average,
+  for an array of 20,000 integers?
+
+[...]
+
+* Calculate: How many comparisons would it need to sort (a) 1,000,000 integers, (b) 10,000,000 integers?
+  Explain why, using your knowledge of the asymptotic complexity of the sorting algorithm.
+
+[...]
+
+* Calculate: Approximately how long time would it take to sort 10,000,000 integers?
+  Explain how you came to that conclusion.
+
+[...]
+
+################################################################################
+## Task 1b: Quicksort                                                         ##
+################################################################################
+
+* How many comparisons does it take to run quicksort on an array of
+  (a) 10,000 integers, (b) 100,000 integers, (c) 1,000,000 integers, (d) 10,000,000 integers?
+
+[...]
+
+* Is this consistent with your knowledge of the asymptotic complexity of quicksort?
+  Explain why.
+
+[...]
+
+* What's the average number of comparisons per second?
+
+[...]
+
+* Calculate: How many comparisons would it need to sort
+  (a) 100,000,000 integers, (b) 1,000,000,000 integers?
+  Explain why, using your knowledge of the asymptotic complexity of the sorting algorithm.
+
+[...]
+
+* Calculate: Approximately how long time would it take to sort 1,000,000,000 integers?
+
+[...]
+
+################################################################################
+## Task 1c: Median of three partitioning                                      ##
+################################################################################
+
+* Try the take-first pivot strategy on an array of size 1,000,000.
+  First without the randomness option (meaning 100% random),
+  then with randomness 0.1 (meaning 10% random).
+  How much worse does the take-first pivot strategy become,
+  in terms of the number of comparisons needed?
+
+[...]
+
+* Do the same experiment as above, but with the median-of-three pivot strategy.
+  How many comparisons does it make, and
+  is there any difference if the list is 100% random or just 10% random?
+
+[...]
+
+################################################################################
+## Task 1d: Quicksort with cutoff to the built-in sort                        ##
+################################################################################
+
+* Which is a good cutoff for your computer, if you want quicksort to run as fast as possible?
+  Explain how you came up with that number.
+
+[...]
+
+* How many comparisons does it make, and how long time does it take,
+  when sorting 10,000,000 integers,
+  (a) without cutoff, (b) with the optimal cutoff?
+  What is the relative improvement when using the cutoff to Java's
+  built-in sort?
+
+[...]
+
+* Try the three different pivot selection strategies with the optimal cutoff,
+  on random arrays of size 10,000,000 (i.e., without the `--randomness` option).
+  How many comparisons do they make (approximately)?
+  What is the relative improvement when using the median-of-three compared to the other ones?
+
+[...]
+
+* Approximately how long time would it take to sort 1,000,000,000 random integers
+  using median-of-three instead of take-first? (Hint: start from your answers to Task 1b.)
+
+[...]
+
+################################################################################
+## Task 2a+b: Build and sort the suffix array                                 ##
+################################################################################
+
+* How large are the index files for `bnc-small.txt` and `bnc-medium.txt`
+  (in megabytes with one decimal)?
+
+[...]
+
+* How large would they be if you collected all possible positions and not just
+  the word starts? Explain how you came to the conclusion.
+
+[...]
+
+* How long time does the quicksort pass take, on
+  (a) `bnc-mini.txt`, (b) `bnc-small.txt`, (c) `bnc-medium.txt`?
+  Is this consistent with your knowledge of the asymptotic complexity of quicksort?
+
+[...]
+
+* Approximately how long will it take to sort the full BNC (the file `bnc-full.txt`)?
+  Explain how you calculate this.
+  Note: you don't have to download the file -- all information you need is at the top of this document!
+
+[...]
+
+################################################################################
+## Task 3a: Binary search in the suffix array                                 ##
+################################################################################
+
+* What is the asymptotic expected worst-case complexity for finding the first occurrence in the corpus?
+
+[...]
+
+* Approximately how many comparisons do you need (in the worst case) to find a string in
+  (a) `bnc-large.txt`, (b) `bnc-huge.txt`, and (c) `bnc-full.txt`?
+
+[...]
+
+* Assume that it takes 1 millisecond to find a string in `bnc-medium.txt`.
+  Approximately how long will it take to search in
+  (a) `bnc-large.txt`, (b) `bnc-huge.txt`, and (c) `bnc-full.txt`?
+
+[...]
+
+(Explain your reasoning above.)
+
+################################################################################
+## Task 3b: Iterating through the results                                     ##
+################################################################################
+
+* The first number that is printed on each line is the position of each search result.
+  As you can see these numbers are not ordered, but they seem to be random.
+  Why do you think the results are not shown in increasing order of position?
+
+[...]
+
+* Your implementation does not calculate how many search results there are.
+  What would you need to add if you want it to print the number of results efficiently?
+
+[...]
+
+################################################################################
+## Appendix: General information                                              ##
+##                                                                            ##
+## A. Approximately how many hours did you spend on the assignment?           ##
+##    Answer per group member.                                                ##
+################################################################################
+
+[...]
+
+################################################################################
+## B. Are there any known bugs / limitations?                                 ##
+################################################################################
+
+[...]
+
+################################################################################
+## C. Did you collaborate with any other students on this lab?                ##
+##    If so, please write in what way you collaborated and with whom.         ##
+##    Also include any resources (including the web) that you may             ##
+##    may have used in creating your design.                                  ##
+################################################################################
+
+[...]
+
+################################################################################
+## D. Describe any serious problems you encountered.                          ##
+################################################################################
+
+[...]
+
+################################################################################
+## E. List any other comments here.                                           ##
+##    Feel free to provide any feedback on how much you learned               ##
+##    from doing the assignment, and whether you enjoyed it.                  ##
+################################################################################
+
+[...]
+
