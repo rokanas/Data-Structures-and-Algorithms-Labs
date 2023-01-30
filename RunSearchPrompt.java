@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -30,6 +29,7 @@ public class RunSearchPrompt {
         suffixArray.readFromDisk();
 
         // The main REPL (read-eval-print loop)
+        @SuppressWarnings("resource")
         Scanner input = new Scanner(System.in);
         while (true) {
             // Read search key from input line, exit if there is no more input.

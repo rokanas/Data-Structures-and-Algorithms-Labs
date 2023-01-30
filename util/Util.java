@@ -104,17 +104,17 @@ public class Util {
 
     public static String formatWithPrecision(double value, int precision) {
         int d = (int) Math.floor(Math.log10(value));
-        return ("%." + Math.max(0, 2 - d) + "f").formatted(value);
+        return String.format("%." + Math.max(0, 2 - d) + "f", value);
     }
 
     public static String formatSeconds(double time) {
-        String[] prefixes = {"", "m", "μ", "n", "p"};
-        for (int i = 0; ; ++i) {
+        String[] prefixes = { "", "m", "μ", "n", "p" };
+        for (int i = 0;; ++i) {
             if (time >= 1 || i == prefixes.length - 1)
                 return formatWithPrecision(time, 2) + " " + prefixes[i] + "s";
             time *= 1e3;
         }
-   }
+    }
 
     public static interface RunnableThrows<E extends Throwable> {
         void run() throws E;

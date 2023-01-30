@@ -1,208 +1,126 @@
-################################################################################
-## Lab: Text indexing (java)                                                  ##
-################################################################################
+Text indexing
+=============
 
-* Group members:
-[...]
-[...]
-[...]
+Time spent per group member:
+* TODO: TODO
+* TODO: TODO
+* TODO: TODO
 
-################################################################################
-## Task 1a: Insertion sort                                                    ##
-################################################################################
+Part 1: Insertion sort and quicksort
+------------------------------------
 
-* How many comparisons does insertion sort need to sort an array of
-  (a) 1,000 integers, (b) 10,000 integers, (c) 20,000 integers?
+**Question**
+Consider the following combinations of algorithms and kinds of input:
+(a) insertion sort, random input
+(b) insertion sort, sorted input
+(c) quicksort, first element pivot, random input
+(d) quicksort, first element pivot, sorted input
+(e) quicksort, random pivot, sorted input
 
-[...]
+Time each case with the benchmarking program `sorting.Test` on lists of these sizes: 1000, 10000, 100000.
+(Hint: sorted means randomness=0 and random means randomness=1.)
 
-* How many comparisons per second does it make on average,
-  for an array of 20,000 integers?
+Use this to decide which of the two growth rate scenarios fits the runtime better:
+(1) close to linear (e.g. Θ(n) or Θ(n log(n))
+(2) close to quadratic (e.g. Θ(n^2))
 
-[...]
+| Case | T(1000) | T(10,000) | T(100,000) | (1) or (2)? |
+|------|---------|-----------|------------|-------------|
+| (a)  |         |           |            |             |
+| (b)  |         |           |            |             |
+| (c)  |         |           |            |             |
+| (d)  |         |           |            |             |
+| (e)  |         |           |            |             |
 
-* Calculate: How many comparisons would it need to sort (a) 1,000,000 integers, (b) 10,000,000 integers?
-  Explain why, using your knowledge of the asymptotic complexity of the sorting algorithm.
+Are there disagreements between this experimental data and your theoretical knowledge?
 
-[...]
+TODO
 
-* Calculate: Approximately how long time would it take to sort 10,000,000 integers?
-  Explain how you came to that conclusion.
+Parts 2 and 4: Building the suffix array
+----------------------------------------
 
-[...]
+**Question**
+How long does it take to sort the suffix array using the following algorithms?
+Abort an algorithm (and skip the rest of its column) once it runs for longer than 100s.
 
-################################################################################
-## Task 1b: Quicksort                                                         ##
-################################################################################
+| Text file               | Characters | insertion sort | quicksort | multi-key quicksort |
+|-------------------------|------------| ---------------|-----------|---------------------|
+| texts/bnc-miniscule.txt |      5,000 |                |           |                     |
+| texts/bnc-tiny.txt      |    100,000 |                |           |                     |
+| texts/bnc-mini.txt      |  2,100,000 |                |           |                     |
+| texts/bnc-small.txt     |  5,700,000 |                |           |                     |
+| texts/bnc-medium.txt    | 20,000,000 |                |           |                     |
+| texts/bnc-large.txt     | 57,000,000 |                |           |                     |
 
-* How many comparisons does it take to run quicksort on an array of
-  (a) 10,000 integers, (b) 100,000 integers, (c) 1,000,000 integers, (d) 10,000,000 integers?
+Pivot strategy used:
+* quicksort: TODO
+* multi-key quicksort: TODO
 
-[...]
+Does this match your knowledge about the asymptotic complexities of insertion sort and quicksort?
 
-* Is this consistent with your knowledge of the asymptotic complexity of quicksort?
-  Explain why.
+TODO
 
-[...]
+Based on the above data, do quicksort and multi-key quicksort have the same asymptotic complexity?
+Justify briefly.
 
-* What's the average number of comparisons per second?
+TODO
 
-[...]
+By what factor is multi-key quicksort faster when compared to quicksort?
 
-* Calculate: How many comparisons would it need to sort
-  (a) 100,000,000 integers, (b) 1,000,000,000 integers?
-  Explain why, using your knowledge of the asymptotic complexity of the sorting algorithm.
+TODO
 
-[...]
+How long do you predict multi-key quicksort to take for texts/bnc-full.txt?
+It contains ca. 570 million characters.
 
-* Calculate: Approximately how long time would it take to sort 1,000,000,000 integers?
+TODO
 
-[...]
+Part 3: Searching using the suffix array
+----------------------------------------
 
-################################################################################
-## Task 1c: Median of three partitioning                                      ##
-################################################################################
+**Question**
+How many string comparisons does one search query in bnc-large.txt perform?
+Explain briefly why (with reference to functions in the code).
 
-* Try the take-first pivot strategy on an array of size 1,000,000.
-  First without the randomness option (meaning 100% random),
-  then with randomness 0.1 (meaning 10% random).
-  How much worse does the take-first pivot strategy become,
-  in terms of the number of comparisons needed?
+TODO
 
-[...]
+**Question**
+The first number `RunSearchPrompt` prints on each line is the position of each search result.
+As you can see, these numbers are not ordered: they seem to be random.
+Why do you think the results are not shown in increasing order of position?
 
-* Do the same experiment as above, but with the median-of-three pivot strategy.
-  How many comparisons does it make, and
-  is there any difference if the list is 100% random or just 10% random?
+TODO
 
-[...]
+**Question**
+What could be done to fix this?
 
-################################################################################
-## Task 1d: Quicksort with cutoff to the built-in sort                        ##
-################################################################################
+TODO
 
-* Which is a good cutoff for your computer, if you want quicksort to run as fast as possible?
-  Explain how you came up with that number.
+Appendix: general information
+=============================
 
-[...]
+**Questions**
+Which spoilers did you use?
 
-* How many comparisons does it make, and how long time does it take,
-  when sorting 10,000,000 integers,
-  (a) without cutoff, (b) with the optimal cutoff?
-  What is the relative improvement when using the cutoff to Java's
-  built-in sort?
+TODO
 
-[...]
+**Question**
+Do you know of any bugs or limitations?
 
-* Try the three different pivot selection strategies with the optimal cutoff,
-  on random arrays of size 10,000,000 (i.e., without the `--randomness` option).
-  How many comparisons do they make (approximately)?
-  What is the relative improvement when using the median-of-three compared to the other ones?
+TODO
 
-[...]
+**Question**
+Did you collaborate with any other students on this lab?
+If so, write with whom and in what way you collaborated.
+Also list any resources (including the web) you have used in creating your design.
 
-* Approximately how long time would it take to sort 1,000,000,000 random integers
-  using median-of-three instead of take-first? (Hint: start from your answers to Task 1b.)
+TODO
 
-[...]
+**Question**
+Did you encounter any serious problems?
 
-################################################################################
-## Task 2a+b: Build and sort the suffix array                                 ##
-################################################################################
+TODO
 
-* How large are the index files for `bnc-small.txt` and `bnc-medium.txt`
-  (in megabytes with one decimal)?
+**Question**
+What is your feedback on this assignment?
 
-[...]
-
-* How large would they be if you collected all possible positions and not just
-  the word starts? Explain how you came to the conclusion.
-
-[...]
-
-* How long time does the quicksort pass take, on
-  (a) `bnc-mini.txt`, (b) `bnc-small.txt`, (c) `bnc-medium.txt`?
-  Is this consistent with your knowledge of the asymptotic complexity of quicksort?
-
-[...]
-
-* Approximately how long will it take to sort the full BNC (the file `bnc-full.txt`)?
-  Explain how you calculate this.
-  Note: you don't have to download the file -- all information you need is at the top of this document!
-
-[...]
-
-################################################################################
-## Task 3a: Binary search in the suffix array                                 ##
-################################################################################
-
-* What is the asymptotic expected worst-case complexity for finding the first occurrence in the corpus?
-
-[...]
-
-* Approximately how many comparisons do you need (in the worst case) to find a string in
-  (a) `bnc-large.txt`, (b) `bnc-huge.txt`, and (c) `bnc-full.txt`?
-
-[...]
-
-* Assume that it takes 1 millisecond to find a string in `bnc-medium.txt`.
-  Approximately how long will it take to search in
-  (a) `bnc-large.txt`, (b) `bnc-huge.txt`, and (c) `bnc-full.txt`?
-
-[...]
-
-(Explain your reasoning above.)
-
-################################################################################
-## Task 3b: Iterating through the results                                     ##
-################################################################################
-
-* The first number that is printed on each line is the position of each search result.
-  As you can see these numbers are not ordered, but they seem to be random.
-  Why do you think the results are not shown in increasing order of position?
-
-[...]
-
-* Your implementation does not calculate how many search results there are.
-  What would you need to add if you want it to print the number of results efficiently?
-
-[...]
-
-################################################################################
-## Appendix: General information                                              ##
-##                                                                            ##
-## A. Approximately how many hours did you spend on the assignment?           ##
-##    Answer per group member.                                                ##
-################################################################################
-
-[...]
-
-################################################################################
-## B. Are there any known bugs / limitations?                                 ##
-################################################################################
-
-[...]
-
-################################################################################
-## C. Did you collaborate with any other students on this lab?                ##
-##    If so, please write in what way you collaborated and with whom.         ##
-##    Also include any resources (including the web) that you may             ##
-##    may have used in creating your design.                                  ##
-################################################################################
-
-[...]
-
-################################################################################
-## D. Describe any serious problems you encountered.                          ##
-################################################################################
-
-[...]
-
-################################################################################
-## E. List any other comments here.                                           ##
-##    Feel free to provide any feedback on how much you learned               ##
-##    from doing the assignment, and whether you enjoyed it.                  ##
-################################################################################
-
-[...]
-
+TODO

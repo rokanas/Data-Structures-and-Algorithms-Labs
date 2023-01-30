@@ -1,4 +1,5 @@
 package util;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class CommandParser implements AutoCloseable {
         String s = getArg(flag, prompt, defaultValue);
         try {
             return Integer.parseInt(s.replace(",", "").replace("_", ""));
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return parsingError(-1, String.format("Value for %s %s is not an integer", flag, s));
         }
     }
@@ -53,8 +54,8 @@ public class CommandParser implements AutoCloseable {
         String s = getArg(flag, prompt, defaultValue);
         try {
             return Float.parseFloat(s);
-        } catch(NumberFormatException e) {
-            return parsingError(0.0f/0, String.format("Value for %s %s is not a number", flag, s));
+        } catch (NumberFormatException e) {
+            return parsingError(0.0f / 0, String.format("Value for %s %s is not a number", flag, s));
         }
     }
 
@@ -110,7 +111,7 @@ public class CommandParser implements AutoCloseable {
                             arg = iter.next();
                             if (isFlag(arg))
                                 throw new NoSuchElementException();
-                        } catch(NoSuchElementException e) {
+                        } catch (NoSuchElementException e) {
                             return parsingError("", String.format("Missing value for %s: %s", flag, prompt));
                         }
                         iter.remove();
@@ -119,7 +120,7 @@ public class CommandParser implements AutoCloseable {
                         // Skip over the next argument -- it's the value for the flag
                         try {
                             iter.next();
-                        } catch(NoSuchElementException e) {
+                        } catch (NoSuchElementException e) {
                             // Another flag is missing its value, but
                             // this will be taken care of when that
                             // flag is handled
@@ -152,21 +153,21 @@ public class CommandParser implements AutoCloseable {
 
     @Override
     public void close() {
-        //if (stdin != null)
-        //    stdin.close();
+        // if (stdin != null)
+        // stdin.close();
         if (arguments != null && !arguments.isEmpty())
             parseErrors.add("The following arguments were not understood: " + String.join(" ", arguments));
         if (arguments != null && (arguments.contains("--help") || arguments.contains("-h"))) {
             if (!requiredFlags.isEmpty()) {
                 System.err.println("The following arguments are required:");
-                for (String line: requiredFlags)
+                for (String line : requiredFlags)
                     System.err.println("  " + line);
                 System.err.println();
             }
 
             if (!optionalFlags.isEmpty()) {
                 System.err.println("The following optional arguments may be given:");
-                for (String line: optionalFlags)
+                for (String line : optionalFlags)
                     System.err.println("  " + line);
                 System.err.println();
             }
@@ -174,10 +175,9 @@ public class CommandParser implements AutoCloseable {
             System.exit(1);
         } else if (!parseErrors.isEmpty()) {
             System.err.println("Error when parsing command line arguments:");
-            for (String err: parseErrors)
+            for (String err : parseErrors)
                 System.err.println("  " + err);
             System.exit(1);
         }
     }
 }
-

@@ -25,7 +25,7 @@ public class Quicksort<E> extends SortingAlgorithm<E, Comparator<? super E>> {
         int size = to - from;
         if (size == 0)
             return;
-        
+
         int pivotIndex = partition(list, from, to);
         throw new UnsupportedOperationException(); // TODO: implement
     }

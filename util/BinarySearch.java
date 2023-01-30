@@ -1,4 +1,5 @@
 package util;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class BinarySearch {
         }
         return from;
     }
-    
+
     // Find the last possible insertion point for the given search key.
     public static <A> int findIntervalEnd(List<A> list, A key, Comparator<A> comparator) {
         int from = 0;

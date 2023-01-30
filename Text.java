@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -13,7 +11,7 @@ public class Text {
 
     public Text(String filename) throws IOException {
         Util.printTiming("Reading file " + filename, () -> {
-            text = Files.readString(Path.of(filename), StandardCharsets.UTF_8).toCharArray();
+            text = Files.readString(Path.of(filename)).toCharArray();
         });
     }
 
@@ -26,9 +24,7 @@ public class Text {
     }
 
     public String substring(int start, int end) {
-        start = Math.max(0, start);
-        end = Math.min(text.length, end);
-        return new String(text, start, end - start);
+        return new String(text, Math.max(0, start), Math.min(text.length, end) - start);
     }
 
     public LexicographicComparator<Integer> suffixComparator(boolean ignoreCase) {

@@ -14,7 +14,7 @@ In this lab, you will implement a very fast search for large text files.
   - [the lab system](https://chalmers.instructure.com/courses/23356/pages/the-lab-system)
   - [running Java labs](https://chalmers.instructure.com/courses/23356/pages/running-java-labs)
 
-# Background
+## Background
 
 If we want to search for a string in a text file, we usually iterate through the file from the start until we find an occurrence of the string.
 This works fine for small-to-medium sized texts,
@@ -40,9 +40,13 @@ The lab has four parts (but some of them are rather short):
 By the end, you will be able to search through large texts in a millisecond!
 (Building the index will take some time, but the search will be instantaneous.)
 
-# Getting started
+## Getting started
 
 The lab directory contains several Java files, some organized into packages:
+
+- **util**:
+  This is a utility package.
+  You don't have to look at it (except when we tell you that something is relevant).
 
 - **sorting**:
   This package deals with sorting.
@@ -51,10 +55,6 @@ The lab directory contains several Java files, some organized into packages:
 - **texts**:
   This directory contains excerpts from the British National Corpus (BNC), a large collection of English-language text collected from all kinds of spoken and written sources.
   We shall use these to test your text indexing algorithm (see Part 2).
-
-- **util**:
-  This is a utility package.
-  You don't have to look at it (except when we tell you that something is relevant).
 
 - **Text.java**:
   This class represents a text file that we want to index (see Part 2).
@@ -73,12 +73,12 @@ The lab directory contains several Java files, some organized into packages:
   Here, you will write down answers to questions in this lab.
   TODO (Christian): add later.
 
-# Part 1: implementing some sorting algorithms
+## Part 1: implementing some sorting algorithms
 
 This part is solely concerned with the **sorting** package.
 You can ignore the rest of the project here.
 
-## Package overview
+### Package overview
 
 We represent each sorting algorithm as subclasses of the abstract class `SortingAlgorithm` (in **SortingAlgorithm.java**).
 This class takes a type parameter `E` for the type of items to be sorted (and another type parameter `C` for specialized comparator support, but this will become relevant only in Part 4).
@@ -117,7 +117,7 @@ The remaining files in the package are helper classes:
   Ignore these for now.
   They will become relevant in Part 4.
 
-## Task 1a: Insertion sort
+### Task 1a: Insertion sort
 
 Your first task is to implement the missing method in the class `InsertionSort`:
 ```java
@@ -164,7 +164,7 @@ The class `InsertionSort` has a main method with some basic tests (alphabetical 
 If you run with assertions enabled, an exception will be thrown if sorting results in an unsorted list.
 Feel free to add your own tests!
 
-## Task 1b: Quicksort
+### Task 1b: Quicksort
 
 Your second task is to complete the implementation of quicksort in `Quicksort.java`.
 To help you structure your code, we have created a skeleton with a separate partition method:
@@ -240,7 +240,7 @@ The course book has pseudocode for quicksort.
 Just like `InsertionSort`, the class `QuickSort` has a main method with some basic tests.
 Feel free to add your own tests!
 
-## Testing
+### Testing
 
 To test your implementations more fully, run the class `Test` in the `sorting` package.
 When it prompts you for parameters, for most of them you can press ENTER — that will make it use the default parameters.
@@ -265,7 +265,7 @@ In this case, the result was the list `[1, 0]`, which is not correctly sorted.
 
 Make sure to fix any bugs found by the testing before moving on.
 
-## Benchmarking
+### Benchmarking
 
 Next, you can benchmark your implementation by re-running `Test` without enabling testing mode:
 
@@ -288,19 +288,17 @@ The `TestSortingAlgorithm` class also accepts parameters as command-line argumen
 For example, you can try the case above by passing the arguments `-n 1,000,000 -r 0.0001`.
 Use whichever way you prefer!
 
-## Asymptotic complexity
+### Asymptotic complexity
 
-Finally, use the benchmarking program to answer some questions about the growth rates (order of growth) of your algorithms.
-See Part 1 in **answers.txt**.
+Finally, use the benchmarking program to answer some questions about the growth rates of your algorithms.
+See **answers.txt**, "Part 1".
 
-TODO (Christian): This file has not been been added to the lab yet. Check again a bit later!
-
-# Part 2: Building the suffix array
+## Part 2: Building the suffix array
 
 Now that you have played around with sorting algorithms for a while, it's time to build the search index.
 Here, you will modify `SuffixArray.java`.
 
-## Background: Suffix arrays
+### Background: Suffix arrays
 
 We want to search for arbitrary strings of characters in a text.
 A very nice data structure called a *suffix array* can be used as a search index for this problem.
@@ -362,28 +360,34 @@ So, for the text above, we start with the array of positions `{0, 5, 9, 15, 22, 
 
 In Java, we achieve the custom sorting of suffix start positions by defining our own comparator.
 
-## The class `Text`
+### Example texts
+
+The `texts` directory has example text files for you to index.
+They are generated from the British National Corpus (BNC), a large collection of English-language text collected from all kinds of spoken and written sources:
+
+| Text file                 | Sentences | Words      | Characters  |
+|---------------------------|-----------| -----------|-------------|
+| `texts/bnc-miniscule.txt` |       200 |     ≈1,000 |      ≈5,000 |
+| `texts/bnc-tiny.txt`      |     2,000 |    ≈21,000 |    ≈100,000 |
+| `texts/bnc-mini.txt`      |    20,000 |   ≈400,000 |  ≈2,100,000 |
+| `texts/bnc-small.txt`     |    60,000 | ≈1,000,000 |  ≈5,700,000 |
+| `texts/bnc-medium.txt`    |   200,000 | ≈3,500,000 | ≈20,000,000 |
+| `texts/bnc-large.txt`     |   600,000 | ≈9,700,000 | ≈57,000,000 |
+
+If you want to test your code on even larger files, you can [download them here](https://github.com/ChalmersGU-data-structure-courses/big-data/tree/main/plain-text-corpora/bnc):
+
+| `texts/bnc-huge.txt`     | 2,000,000 |  ≈3,500,000 | ≈210,000,000 |
+| `texts/bnc-full.txt`     | 6,071,889 | ≈97,000,000 | ≈570,000,000 |
+
+Those are stored compressed in `.gz` format.
+You have to decompress them to be able to search them using your implementation.
+
+### The class `Text`
 
 The class `Text` represents the text we want to index.
 It is already implemented for you.
-
-We construct it by passing it the path to a text file to read in.
-In the `texts` directory, we provide some example text files generated from the British National Corpus (BNC), a large collection of English-language text collected from all kinds of spoken and written sources:
-
-- `bnc-mini.txt` (2.0Mb): the first 20,000 sentences of BNC (≈0.4 million words)
-- `bnc-small.txt` (5.5Mb): the first 60,000 sentences of BNC (≈1 million words)
-- `bnc-medium.txt` (19Mb): the first 200,000 sentences of BNC (≈3.5 million words)
-- `bnc-large.txt` (55Mb): the first 600,000 sentences of BNC (≈9.7 million words)
-
-If you want to test your code on even larger files, you can download some here:
-
-- [`bnc-huge.txt.gz`](https://github.com/ChalmersGU-data-structure-courses/big-data/raw/main/plain-text-corpora/bnc/bnc-huge.txt.gz) (197Mb): the first 2,000,000 sentences of BNC (≈35 million words)
-- [`bnc-full.txt.gz`](https://github.com/ChalmersGU-data-structure-courses/big-data/raw/main/plain-text-corpora/bnc/bnc-full.txt.gz) (545Mb): all 6,072,000 sentences of BNC (≈100 million words)
-
-Note that the large files are stored in compressed `.gz` format.
-You have to decompress them to be able to search them using your implementation.
-
-The class `Text` has some useful methods:
+Its constructor takes a path to a text file to read in.
+Useful methods:
 * `suffix(int start)` returns the suffix starting at `start`.
 * `substring(int start, int end)` returns the substring from `start` (inclusive) to `end` (exclusive).
   This constructs a new string, so should only be used for small substrings.
@@ -391,7 +395,7 @@ The class `Text` has some useful methods:
 * `printKeywordInContext` for nicely printing a found match.
   This will be useful in Part 3.
 
-## The class `SuffixArray`
+### The class `SuffixArray`
 
 The class `SuffixArray` represents the search index.
 Apart from the attribute `text` for the text to search, it has a list `sortedSuffixStarts` of integers that represents the sorted suffix array.
@@ -419,16 +423,11 @@ There also is a main method.
 Feel free to experiment with the `SuffixArray` class there!
 
 **Note:**
-The class `SuffixArray` has a static constant `IS_CASE_INSENSITIVE` that determines if capitalization should matter when looking for search matches.
+The class `SuffixArray` has a static constant `IS_CASE_INSENSITIVE` that determines if capitalization of letters should matter when looking for search matches.
+A case sensitive search index will only work correctly for case sensitive search queries.
+So if you change this constant, remember to rebuild your suffix arrays!
 
-
-A suffix array is only good for
-
-This changes the suffix array!
-Every
-So if you change this constant, you need to rebuild all your search indexes.
-
-## Implementing `build()`
+### Implementing `build()`
 
 This method is responsible for filling in the list `sortedSuffixStarts`.
 The two main parts are missing.
@@ -458,12 +457,22 @@ Preferably, one with good order of growth!
 Construct an instance and use it to sort the suffix array.
 Use `counting` as the comparator; it wraps the suffix comparator of the `Text` instance using a comparison counter.
 
-## Testing and benchmarking
+You can experiment with using different sorting algorithms.
+(In fact, there are a few questions in **answers.txt** about that.)
+
+### Testing and benchmarking
 
 `BuildSuffixArray` is a simple wrapper program to build a search index for a given text file and write it to disk.
-It will print an error if your sorting algorithm for some reason does not sort the suffix array correctly.
+It will report an error if your sorting algorithm for some reason does not sort the suffix array correctly.
+It also prints some useful statistics, most importantly the time it took to sort the suffix array.
 
-# Part 3: Searching using the suffix array
+### Questions to answer
+
+See **answers.txt**, "Parts 2 and 4".
+Answer only the part of the questions that deal with insertion sort and quicksort.
+You will implement Multi-key quicksort in Part 4.
+
+## Part 3: Searching using the suffix array
 
 Here, you will implement the method
 ```java
@@ -511,7 +520,7 @@ Requirements are as follows:
 * If there are more matches than `maxNumMatches`, stop printing them with a line like "[17 matches omitted]".
 * Do not use linear search.
 
-## Testing and benchmarking
+### Testing and benchmarking
 
 Now you can finally reap the fruits of your labor.
 Execute `RunSearchPrompt` with a text file for which you have previously built an index.
@@ -575,22 +584,175 @@ And most of the query time is probably just used for printing the results.
   As you can see these numbers are not ordered, but they seem to be random.
   Why do you think the results are not shown in increasing order of position?
 
-## Questions to answer
+### Questions to answer
 
-In `answers.txt`:
+See `answers.txt`, "Part 3".
 
-* Why do you think the results are not shown in increasing order of position?
-  What could be done to fix this?
+## Part 4: Multi-key quicksort
 
-# Part 4: Multi-key quicksort
+Using quicksort to build the search index is already quite fast, but we are going to make it even faster.
+You will implement a version of quicksort that is particularly fast at sorting a list of sequences *in lexicographic order*.
+Our use case for this is sorting a list of strings (which are sequences of characters) in alphabetic order.
 
-TODO (Christian): write this part.
+### Lexicographic order
 
-For now, see the code comments in `sorting/MultiKeyQuicksort.java`.
+Suppose we have a type T with an ordering.
+This induces an ordering on the sequences of type T: given sequences x and y, we just look for the first difference between them.
+For example, if x is [4, 1, 7, 6] and y is [4, 1, 6, 8], then x > y because the first position where the sequences differ is index 2, and x[2] = 7 is bigger than y[2] = 6.
+
+The abstract class **LexicographicComparator** in the package **sorting** implements a Java comparator based on this principle.
+It has the following abstract method:
+```java
+// Compare x and y at position k.
+public abstract int compare(E x, E y, int k);
+```
+The comparator method `compare(x, y)` is then defined in terms of the above method: we loop over all positions k, starting from 0, until `compare(x, y, k)` tells us there is a difference (a non-zero comparison value, which we return).
+We call this a *lexicographic comparator*.
+
+Note that we do not actually assume that E is a sequence type in this presentation.
+In particular, when we have x of type E, we cannot actually access position k.
+But that won't be needed.
+Comparing elements of type E at position k will be enough, whatever "at position k" means.
+
+**Note:**
+We make two simplifying asumptions:
+* All positions are valid (i.e., we never get an out-of-bounds error).
+* If `x` and `y` compare equal at all positions, they are equal.
+
+The class **CharSequenceComparator** implements **CharSequenceComparator** with the position-based comparison method expected from strings: we simply compare the k-th characters.
+In fact, this is exactly what the predefined comparator for strings does.
+So this implements the alphabetic ordering.
+
+**Note:**
+The constructor of **CharSequenceComparator** can be given a boolean flag that decides if capitalization of characters should be ignored.
+We do not need this for this part.
+
+### Multi-key quicksort
+
+Multi-key quicksort is a version of quicksort optimized for types with a lexicographic ordering.
+You will implement it in **MultiKeyQuicksort**.
+Of note, the `comparator` attribute is now an instance of `LexicographicComparator`.
+So given elements x and y, we can compare them at any position k of our choosing.
+
+There are two main differences over plain quicksort:
+
+* We never compare elements fully.
+  Instead, we only ever compare them at some position.
+  Initially, we compare elements in their first positions.
+  But as the algorithm goes on, we will start comparing elements also in their second positions, third positions, and so on.
+
+* Instead of partitioning into a left part and a right part, we partition into *three parts*.
+  The middle part will contain all the elements that compare equal to the pivot (at the chosen comparison position).
+
+The pivot selection step works the same as in quicksort.
+
+Initially, we partition the array by comparing their first positions (position 0).
+This gives us three parts:
+* the left part has elements with first position smaller than the pivot,
+* the middle part has elements with same first position as the pivot.
+* the right part has elements with first position larger than the pivot.
+
+Just like in quicksort, we handle the left and right part recursively, calling the same method with a smaller range.
+But for the middle part, we can do something more efficient.
+Since we already know that all elements in the middle part have the same first position, we can move on to comparing the *second positions*.
+
+To be able to recurse also in this case, we need to add a *comparison position* parameter (called `position` in `MultiKeyQuicksort`) to the sorting method.
+Then the general pattern is:
+* For the left and right part, we keep the same comparison position in the recursive call.
+* For the middle part, we increase the comparison position by one.
+
+That leaves just one quetion: how do we partition into three parts?
+This should be in-place, i.e., not use a helper array.
+Feel free to look at some of the below spoilers if you are out of ideas.
+
+<details>
+<summary>
+Spoiler 1
+</summary>
+
+Start as usual by swapping the pivot with the first element of the range.
+</details>
+
+<details>
+<summary>
+Spoiler 2
+</summary>
+
+Let's call the current range `from` and `to`.
+Eventually, we want a range `middleFrom` and `middleTo` for the middle part of the partition.
+This should include the pivot.
+The range from `from` and to `middleFrom` will be the left part and the range from `middleTo` to `to` will be the right part.
+</details>
+
+<details>
+<summary>
+Spoiler 3
+</summary>
+
+Initialize `middleFrom = from + 1` and `middleTo = to`.
+You need to traverse all the elements from `middleFrom` and `middleTo`, compare each to the pivot in the position under consideration, and depending on the result swap it into its parts of the partition.
+We will update to update some of the variables such as `middleFrom` and `middleTo` to account for changes in the partition sizes.
+</details>
+
+<details>
+<summary>
+Spoiler 4
+</summary>
+
+Say we use `i` as the index to start at ``middleFrom`.
+We process the element at `i` until we reach `i == middleTo`.
+Inside the loop, the ranges have to following meaning:
+- from `from` to `middleFrom`: the left part so far
+- from `middleFrom` to `i`: the middle part so far
+- from `i` to `middleTo`: still to be processed
+- from `to` to `middleTo`: the right part so far
+</details>
+
+<details>
+<summary>
+Spoiler 4
+</summary>
+
+Suppose we process the element at `i`.
+Let `c = compare(list.get(i), pivot, position)`.
+What we should do depends on `c`.
+* If `c < 0`, the element belongs in the left part.
+* If `c == 0`, the element belongs to the middle part.
+* If `c > 0`, the element belongs to the right part.
+
+In each case, we may use a swap to update the three parts of the partition so far with the new element.
+How do the variables `middleFrom`, `middleTo`, `i` change?
+</details>
+
+### Testing
+
+Again, the main method in `MultiKeyQuicksort` has some small test cases you can experiment with.
+You can test and benchmark multi-key quicksort with the program `sorting.Test`, in the same way as you did for quicksort and insertion sort.
+Make sure to fix any bugs found by the testing before moving on.
+
+### Faster index building?
+
+Modify the `build()` method of `SuffixArray` to use multi-key quicksort.
+Is building a search index now any faster than with regular quicksort?
+Again, `BuildSuffixArray` provides you with useful timing data.
+
+### Questions to answer
+
+Finish the remaining questions in **answers.txt**, "Parts 2 and 4".
+
+### Optional task
+
+When you run multi-key quicksort on `bnc-large.txt` or larger, you may experience as stack overflow error.
+Which code path do you think a high level of nested calls comes from?
+How can you fix this?
 
 ## Literature
 
-- Wikipedia explains suffix arrays: https://en.wikipedia.org/wiki/Suffix_array
+- Wikipedia explains [suffix arrays](https://en.wikipedia.org/wiki/Suffix_array)
 
 - Sedgewick & Wayne (2011) has a full chapter on string algorithms (chapter 5), including text searching.
   They even have a section about suffix arrays (in chapter 6 "Context").
+
+- Wikipedia explains [multi-key quicksort](https://en.wikipedia.org/wiki/Multi-key_quicksort).
+  But it gives away the pseudocode.
+  Try to first build your own version.

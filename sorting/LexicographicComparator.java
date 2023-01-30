@@ -17,7 +17,7 @@ public abstract class LexicographicComparator<E> implements Comparator<E> {
         // Avoid looping forever when x and y are the same.
         if (x.equals(y))
             return 0;
-        
+
         // Loop over all positions until we find a difference.
         for (int k = 0;; k++) {
             int c = compare(x, y, k);
