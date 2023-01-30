@@ -2,8 +2,6 @@
 
 In this lab, you will implement a very fast search for large text files.
 
-[This readme is still being updated! Pull again later to get the full version.]
-
 ## About the labs
 
 * This lab is part of the examination of the course.
@@ -71,7 +69,6 @@ The lab directory contains several Java files, some organized into packages:
 
 - **answers.txt**:
   Here, you will write down answers to questions in this lab.
-  TODO (Christian): add later.
 
 ## Part 1: implementing some sorting algorithms
 
