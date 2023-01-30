@@ -36,7 +36,7 @@ public class SuffixArray {
     }
 
     public void build() {
-        Util.printTiming("initializing suffix array", () -> {
+        Util.printTiming("Initializing suffix array", () -> {
             sortedSuffixStarts = new IOIntArray(text.size());
 
             // Write all the possible suffix starts into `sortedSuffixStarts` (not yet sorted).
@@ -52,7 +52,7 @@ public class SuffixArray {
 
         });
         System.out.println("  * Comparison count: " + counting.numComparisons());
-        System.out.println("  * Comparison speed: " + Util.formatSeconds(time / counting.numComparisons()) + "/cmp");
+        System.out.println("  * Average comparison time: " + Util.formatSeconds(time / counting.numComparisons()));
 
         Util.printTiming("Checking sortedness", () -> {
             if (!Util.isSorted(sortedSuffixStarts, suffixComparator))
@@ -107,7 +107,7 @@ public class SuffixArray {
     public void searchForKey(String searchKey, int maxNumMatches, int context, boolean trimLines) {
         final List<String> sortedSuffixes = sortedSuffixes(searchKey.length());
         final Comparator<String> c = IS_CASE_INSENSITIVE ? String.CASE_INSENSITIVE_ORDER : Comparator.naturalOrder();
-        Util.printTiming("Searching for \"" + searchKey + "\"", () -> {
+        Util.printTimingNL("Searching for \"" + searchKey + "\"", () -> {
             // Find the range of matching suffixes and report up to maxNumMatches.
             // * You can use the methods in util.BinarySearch. You may find the two variables defined at the start of this method helpful.
             // * Call text.printKeywordInContext to report a match. That is where the remaining arguments are used.

@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -11,7 +13,7 @@ public class Text {
 
     public Text(String filename) throws IOException {
         Util.printTiming("Reading file " + filename, () -> {
-            text = Files.readString(Path.of(filename)).toCharArray();
+            text = Files.readString(Path.of(filename), StandardCharsets.UTF_8).toCharArray();
         });
     }
 
@@ -22,9 +24,11 @@ public class Text {
     public CharSequence suffix(int start) {
         return CharBuffer.wrap(text, start, text.length - start);
     }
-    
+
     public String substring(int start, int end) {
-        return new String(text, Math.max(0, start), Math.min(text.length, end) - start);
+        start = Math.max(0, start);
+        end = Math.min(text.length, end);
+        return new String(text, start, end - start);
     }
 
     public LexicographicComparator<Integer> suffixComparator(boolean ignoreCase) {
@@ -61,7 +65,7 @@ public class Text {
         String prefix = substring(start - context, start);
         String found = substring(start, end);
         String suffix = substring(end, end + context);
-        
+
         // Replace line breaks in the match.
         // Suppress carriage return from the output.
         found = found.replace('\n', ' ').replace('\r', ' ');

@@ -8,11 +8,11 @@ import util.Util;
 public abstract class SortingAlgorithm<E, C extends Comparator<? super E>> {
     C comparator;
 
-    SortingAlgorithm(C comparator) {
+    public SortingAlgorithm(C comparator) {
         this.comparator = comparator;
     }
 
-    Comparator<? super E> getComparator() {
+    public C getComparator() {
         return comparator;
     }
 

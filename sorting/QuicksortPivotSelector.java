@@ -1,7 +1,5 @@
 package sorting;
 
-import static sorting.QuicksortPivotSelector.medianOfThreeIndex;
-
 import java.util.Comparator;
 import java.util.List;
 

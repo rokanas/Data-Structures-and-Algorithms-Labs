@@ -139,6 +139,13 @@ public class Util {
         return time;
     }
 
+    public static <E extends Throwable> double printTimingNL(String description, RunnableThrows<E> callback) throws E {
+        System.out.println(description + ":");
+        double time = Util.time(() -> callback.run());
+        System.out.println(Util.formatSeconds(time));
+        return time;
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     // Output redirection
 
