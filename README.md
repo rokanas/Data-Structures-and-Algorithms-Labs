@@ -511,8 +511,11 @@ The comparator to use is provided already in the method:
 final Comparator<String> c = IS_CASE_INSENSITIVE ? String.CASE_INSENSITIVE_ORDER : Comparator.naturalOrder();
 ```
 
+Remember that the list `sortedSuffixStarts` has the starting position for each suffix.
+
 Requirements are as follows:
-* Report each match suing `text.printKeywordInContext`.
+* Report each match using `text.printKeywordInContext`.
+  The `start` and `end` arguments are positions in the text file specifying where the match it.
 * If there are no matches, print the line "[no matches found]".
 * If there are more matches than `maxNumMatches`, stop printing them with a line like "[17 matches omitted]".
 * Do not use linear search.
@@ -696,7 +699,7 @@ We will update to update some of the variables such as `middleFrom` and `middleT
 Spoiler 4
 </summary>
 
-Say we use `i` as the index to start at ``middleFrom`.
+Say we use `i` as the index to start at `middleFrom`.
 We process the element at `i` until we reach `i == middleTo`.
 Inside the loop, the ranges have to following meaning:
 - from `from` to `middleFrom`: the left part so far
@@ -707,7 +710,7 @@ Inside the loop, the ranges have to following meaning:
 
 <details>
 <summary>
-Spoiler 4
+Spoiler 5
 </summary>
 
 Suppose we process the element at `i`.
