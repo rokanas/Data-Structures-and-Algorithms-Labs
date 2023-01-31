@@ -18,7 +18,10 @@ Consider the following combinations of algorithms and kinds of input:
 (e) quicksort, random pivot, sorted input
 
 Time each case with the benchmarking program `sorting.Test` on lists of these sizes: 1000, 10000, 100000.
-(Hint: sorted means randomness=0 and random means randomness=1.)
+Hints:
+* Sorted means randomness=0 and random means randomness=1.
+* If you get a StackOverflowError, increase the stack memory available when running the Java program.
+  100 MB should be enough.
 
 Use this to decide which of the two growth rate scenarios fits the runtime better:
 (1) close to linear (e.g. Θ(n) or Θ(n log(n))
