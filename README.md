@@ -305,7 +305,7 @@ For example, "are through there" is a suffix of the text above.
 
 Conceptually, a suffix array consists of *all suffixes* of the text, sorted alphabetically.
 Here are some suffixes of our example text, together with the position (in characters) where each one starts.
-(There are also suffixes that start in the middle of a word, but we ignore those in this example.)
+(There are also suffixes that start at other characters, for example the middle of a word or a blank, but we ignore those just for this example.)
 We write it as an array of pairs of the form `(position, suffix)`:
 
 ```
