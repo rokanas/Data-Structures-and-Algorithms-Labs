@@ -85,7 +85,7 @@ public class Util {
             return comparator.compare(x, y);
         }
 
-        public int compare(E y, E x, int k) {
+        public int compare(E x, E y, int k) {
             counter++;
             return comparator.compare(x, y, k);
         }
