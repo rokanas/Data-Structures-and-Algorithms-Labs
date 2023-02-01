@@ -373,6 +373,8 @@ They are generated from the British National Corpus (BNC), a large collection of
 
 If you want to test your code on even larger files, you can [download them here](https://github.com/ChalmersGU-data-structure-courses/big-data/tree/main/plain-text-corpora/bnc):
 
+| Text file                | Sentences | Words       | Characters   |
+|--------------------------|-----------| ------------|--------------|
 | `texts/bnc-huge.txt`     | 2,000,000 |  ≈3,500,000 | ≈210,000,000 |
 | `texts/bnc-full.txt`     | 6,071,889 | ≈97,000,000 | ≈570,000,000 |
 
