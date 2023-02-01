@@ -21,7 +21,7 @@ Time each case with the benchmarking program `sorting.Test` on lists of these si
 Hints:
 * Sorted means randomness=0 and random means randomness=1.
 * If you get a StackOverflowError, increase the stack memory available when running the Java program.
-  100 MB should be enough.
+  10 MB should be enough, for this you would pass this VM argument: -Xss10M
 
 Use this to decide which of the two growth rate scenarios fits the runtime better:
 (1) close to linear (e.g. Θ(n) or Θ(n log(n))
