@@ -24,7 +24,7 @@ Hints:
   10 MB should be enough, for this you would pass this VM argument: -Xss10M
 
 Use this to decide which of the two growth rate scenarios fits the runtime better:
-(1) close to linear (e.g. Θ(n) or Θ(n log(n))
+(1) close to linear (e.g. Θ(n) or Θ(n log(n)))
 (2) close to quadratic (e.g. Θ(n^2))
 
 | Case | T(1000) | T(10,000) | T(100,000) | (1) or (2)? |
