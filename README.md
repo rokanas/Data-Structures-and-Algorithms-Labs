@@ -691,7 +691,7 @@ The range from `from` and to `middleFrom` will be the left part and the range fr
 Spoiler 3
 </summary>
 
-Initialize `middleFrom = from + 1` and `middleTo = to`.
+Initialize `middleFrom = from` and `middleTo = to`.
 You need to traverse all the elements from `middleFrom` and `middleTo`, compare each to the pivot in the position under consideration, and depending on the result swap it into its parts of the partition.
 We will update to update some of the variables such as `middleFrom` and `middleTo` to account for changes in the partition sizes.
 </details>
@@ -702,6 +702,7 @@ Spoiler 4
 </summary>
 
 Say we use `i` as the index to start at `middleFrom`.
+(Actually, we can start at `middleFrom + 1`. Why?)
 We process the element at `i` until we reach `i == middleTo`.
 Inside the loop, the ranges have to following meaning:
 - from `from` to `middleFrom`: the left part so far
