@@ -708,7 +708,7 @@ Inside the loop, the ranges have to following meaning:
 - from `from` to `middleFrom`: the left part so far
 - from `middleFrom` to `i`: the middle part so far
 - from `i` to `middleTo`: still to be processed
-- from `to` to `middleTo`: the right part so far
+- from `middleTo` to `to`: the right part so far
 </details>
 
 <details>
@@ -718,7 +718,7 @@ Spoiler 5
 
 Suppose we process the element at `i`.
 Let `c = compare(list.get(i), pivot, position)`.
-What we should do depends on `c`.
+What we should do depends on `c`:
 * If `c < 0`, the element belongs in the left part.
 * If `c == 0`, the element belongs to the middle part.
 * If `c > 0`, the element belongs to the right part.
