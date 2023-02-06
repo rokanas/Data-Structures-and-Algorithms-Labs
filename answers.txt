@@ -1,0 +1,96 @@
+Plagiarism detection
+====================
+
+Time spent per group member:
+* TODO: TODO
+* TODO: TODO
+* TODO: TODO
+
+Task 1: Analyzing the slow program
+----------------------------------
+
+**Question**
+What is the asymptotic complexity of findSimilarity?
+Answer in terms of N, the total number of 5-grams in the input files.
+Assume that the number of duplicate occurrences of 5-grams is a small constant - that is, there is not much plagiarised text.
+Explain briefly.
+
+TODO
+
+**Question**
+How long did the program take on the 'small' and 'medium' directories?
+Is the ratio between the times what you would expect,
+given the asymptotic complexity? Explain very briefly why.
+
+TODO
+
+**Question**
+How long do you predict the program would take to run on
+the 'huge' directory? Show your calculations.
+
+TODO
+
+Task 2: Using an index
+----------------------
+
+**Question**
+Which of the three BSTs in the program usually become unbalanced?
+Say very briefly:
+- how you observed this,
+- why you think this is the case.
+
+TODO
+
+**Question** (optional)
+Is there a simple way to stop these trees becoming unbalanced?
+
+TODO (optional)
+
+Task 3: Using scapegoat trees instead of BSTs
+---------------------------------------------
+
+For the below questions, we denote by N the total number of 5-grams.
+We assume there is a (small) constant number of duplicate occurrences of 5-grams.
+
+**Question**
+What is the asymptotic complexity of buildIndex?
+Justify briefly.
+
+TODO
+
+**Question**
+What is the asymptotic complexity of findSimilarity?
+Justify briefly.
+
+TODO
+
+**Question** (optional)
+Instead of the previous assumption, we now allow an arbitrary total similarity score S.
+Express the asymptotic complexity of the two functions in terms of both N and S (at the same time).
+
+TODO (optional)
+
+Appendix: general information
+=============================
+
+**Question**
+Do you know of any bugs or limitations?
+
+TODO
+
+**Question**
+Did you collaborate with any other students on this lab?
+If so, write with whom and in what way you collaborated.
+Also list any resources (including the web) you have used in creating your design.
+
+TODO
+
+**Question**
+Did you encounter any serious problems?
+
+TODO
+
+**Question**
+What is your feedback on this assignment?
+
+TODO
