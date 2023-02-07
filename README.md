@@ -356,6 +356,8 @@ This array is then sorted — not numerically by position, but alphabetically by
 So, for the text above, we start with the array of positions `{0, 5, 9, 15, 22, 26, 34}`, and sort it to get `{22, 15, 5, 0, 34, 9, 26}`.
 
 In Java, we achieve the custom sorting of suffix start positions by defining our own comparator.
+Below, we use suffixes that start **at any character**, not just at the start of the word.
+For example, this makes it possible to search for character sequences in the middle of a word.
 
 ### Example texts
 
@@ -743,11 +745,23 @@ Again, `BuildSuffixArray` provides you with useful timing data.
 
 Finish the remaining questions in **answers.txt**, "Parts 2 and 4".
 
-### Optional task
+## Submission
 
-When you run multi-key quicksort on `bnc-large.txt` or larger, you may experience as stack overflow error.
-Which code path do you think a high level of nested calls comes from?
-How can you fix this?
+Double check:
+* Have you answered the questions in `answers.txt`?
+* Have you tested your code with [Robograder](https://chalmers.instructure.com/courses/23356/pages/the-lab-system#robograder)?
+
+[How to submit](https://chalmers.instructure.com/courses/23356/pages/the-lab-system#submit-a-lab).
+
+### Optional tasks
+
+* When you run multi-key quicksort on `bnc-large.txt` or larger, you may experience as stack overflow error.
+  Which code path do you think a high level of nested calls comes from?
+  How can you fix this?
+
+* When you run multi-key quicksort on a list that contains duplicates, your code will run forever or cause a stack overflow error.
+  Fortunately, this can never happen for a suffix array (why?).
+  How can you fix your implementation so that it also works with duplicates?
 
 ## Literature
 
