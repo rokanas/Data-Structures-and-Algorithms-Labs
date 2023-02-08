@@ -19,7 +19,13 @@ public class InsertionSort<E> extends SortingAlgorithm<E, Comparator<? super E>>
     // * The last element of a list range given by `from` and `to` is `list.get(to - 1)`.
     // - Make no recursive calls.
     public void sort(List<E> list, int from, int to) {
-        throw new UnsupportedOperationException(); // TODO: implement
+        for (int i = from; i < to; i++) { // debug from here with correct solution and (to - 1) to understandddd
+            int j = i;
+            while (j > 0 && comparator.compare(list.get(j), list.get(j - 1)) < 0) {
+                swap(list, j, j - 1);
+                j--;
+            }
+        }
     }
 
     // Run your own tests here!

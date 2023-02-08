@@ -44,8 +44,7 @@ public class MultiKeyQuicksort<E> extends SortingAlgorithm<E, LexicographicCompa
         int size = to - from;
         if (size <= 1)
             return;
-        
-        throw new UnsupportedOperationException(); // TODO: implement
+
     }
 
     // Run your own tests here!

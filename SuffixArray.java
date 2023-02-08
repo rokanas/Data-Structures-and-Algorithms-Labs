@@ -5,6 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import sorting.LexicographicComparator;
+import sorting.Quicksort;
+import sorting.QuicksortPivotSelector;
+import util.BinarySearch;
 import util.IOIntArray;
 import util.Util;
 import util.Util.CountingLexicographicComparator;
@@ -40,7 +43,9 @@ public class SuffixArray {
             sortedSuffixStarts = new IOIntArray(text.size());
 
             // Write all the possible suffix starts into `sortedSuffixStarts` (not yet sorted).
-            throw new UnsupportedOperationException(); // TODO: implement
+            for (int i = 0; i < sortedSuffixStarts.size(); i++) {
+                sortedSuffixStarts.set(i, i);
+            }
         });
 
         final LexicographicComparator<Integer> suffixComparator = text.suffixComparator(IS_CASE_INSENSITIVE);
@@ -48,7 +53,8 @@ public class SuffixArray {
         double time = Util.printTiming("Sorting suffix array", () -> {
 
             // Construct and call one of your sorting algorithms.
-            throw new UnsupportedOperationException(); // TODO: implement
+            Quicksort<Integer> algorithm = new Quicksort<>(counting, QuicksortPivotSelector.MEDIAN_OF_THREE);
+            algorithm.sort(sortedSuffixStarts);
 
         });
         System.out.println("  * Comparison count: " + counting.numComparisons());
@@ -113,16 +119,32 @@ public class SuffixArray {
             // * Call text.printKeywordInContext to report a match. That is where the remaining arguments are used.
             // * If there are more matches than maxNumMatches, end with a line as follows:
             // [17 matches omitted]
-            throw new UnsupportedOperationException(); // TODO: implement
+
+            int start = BinarySearch.findIntervalStart(sortedSuffixes, searchKey, c);
+            int end = BinarySearch.findIntervalEnd(sortedSuffixes, searchKey, c);
+            int range = end - start;
+
+            if (range == 0) {
+                System.out.println("no matches found");
+            } else {
+                int iterations = range <= maxNumMatches ? end : start + maxNumMatches;
+                for (int i = start; i < iterations; i++) {
+                    text.printKeywordInContext(sortedSuffixStarts.get(i), (sortedSuffixStarts.get(i) + searchKey.length()), context, trimLines);
+                }
+
+                if (maxNumMatches < range) {
+                    System.out.println(range - maxNumMatches + " matches omitted");
+                }
+            }
         });
     }
 
     // Experiment with the SuffixArray class here.
     public static void main(String[] args) throws IOException {
         SuffixArray suffixArray = new SuffixArray("texts/bnc-small.txt");
-        // suffixArray.build();
-        // suffixArray.writeToDisk();
-        // suffixArray.readFromDisk();
-        // suffixArray.searchForKey("ghost", 10, 40, true);
+        suffixArray.build();
+        suffixArray.writeToDisk();
+        suffixArray.readFromDisk();
+        suffixArray.searchForKey("ghost", 10, 40, true);
     }
 }
