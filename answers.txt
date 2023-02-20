@@ -1,0 +1,119 @@
+Path finder
+===========
+
+Time spent per group member:
+* TODO: TODO
+* TODO: TODO
+* TODO: TODO
+
+All tasks
+---------
+
+**Question**
+For each of the below invocations, list:
+- the number of loop iterations,
+- the minimal cost,
+- and a shortest path (i.e. a path having minimal cost).
+
+After completing each task, you can fill in more data here.
+
+> java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-SE.txt Lund Kiruna
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+> java RunPathFinder ucs NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+> java RunPathFinder astar NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
+
+loop iterations: TODO
+minimal cost:    TODO
+
+> java RunPathFinder ucs NPuzzle 3 /HGF/BED/C_A/ /ABC/DEF/GH_/
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+> java RunPathFinder ucs GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+> java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
+
+loop iterations: TODO
+minimal cost:    TODO
+
+> java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+> java RunPathFinder astar WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
+
+loop iterations: TODO
+minimal cost:    TODO
+shortest path:   TODO
+
+Task 2: Word ladder
+-------------------
+
+**Question**
+What's the asymptotic average-case complexity of WordLadder.outgoingEdges in the alphabet size K and the length N of the given word?
+
+TODO
+
+Tasks 3 and 4: The A* algorithm, Guessing the cost
+--------------------------------------------------
+
+**Question**
+For each of the three classes GridGraph, WordLadder, and NPuzzle, what is the approximate improvement factor in the number of loop iterations by running A* instead of UCS?
+Try a number of different examples per class.
+
+- GridGraph:  TODO
+- WordLadder: TODO
+- NPuzzle:    TODO
+
+**Question**
+For which of the three classes GridGraph, WordLadder, and NPuzzle, did the heuristic guessCost have the most impact?
+What do you think is the reason for this?
+
+TODO
+
+**Question**
+What are the main differences between your implementations of searchAstar and searchUCS?
+
+TODO
+
+Appendix: general information
+=============================
+
+**Question**
+Do you know of any bugs or limitations?
+
+TODO
+
+**Question**
+Did you collaborate with any other students on this lab?
+If so, write with whom and in what way you collaborated.
+Also list any resources (including the web) you have used in creating your design.
+
+TODO
+
+**Question**
+Did you encounter any serious problems?
+
+TODO
+
+**Question**
+What is your feedback on this assignment?
+
+TODO
