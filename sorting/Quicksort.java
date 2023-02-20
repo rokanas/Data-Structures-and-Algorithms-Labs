@@ -42,7 +42,7 @@ public class Quicksort<E> extends SortingAlgorithm<E, Comparator<? super E>> {
         int left = from + 1;
         int right = to - 1;
 
-        do {
+        do { //Is this unnecessary computation because guaranteed 2 happen 1?one time? FIXXX
 
             while (left <= right && comparator.compare(list.get(left), pivot) <= 0) {
                 left++;

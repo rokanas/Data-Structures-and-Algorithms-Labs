@@ -45,6 +45,37 @@ public class MultiKeyQuicksort<E> extends SortingAlgorithm<E, LexicographicCompa
         if (size <= 1)
             return;
 
+        int pivotIndex = selector.pivotIndex(list, from, to, comparator);
+        E pivot = list.get(pivotIndex);
+
+        swap(list, from, pivotIndex);
+        int middleFrom = from;
+        int middleTo = to;
+        int i = middleFrom + 1;
+
+
+        while (i < middleTo) {
+
+            int c = comparator.compare(list.get(i), pivot, position);
+
+            if (c < 0) {
+                middleFrom++;
+                swap(list, i, middleFrom);
+                i++;
+            } else if (c == 0) {
+                i++;
+            } else { // if (c > 0)
+                middleTo--;
+                swap(list, i, middleTo);
+            }
+
+        }
+
+        swap(list, from, middleFrom);
+
+        sort(list, from, middleFrom, position);
+        sort(list, middleTo, to, position);
+        sort(list, middleFrom, middleTo, position + 1);
     }
 
     // Run your own tests here!

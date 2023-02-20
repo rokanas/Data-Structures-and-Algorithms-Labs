@@ -2,9 +2,11 @@ Text indexing
 =============
 
 Time spent per group member:
-* TODO: TODO
-* TODO: TODO
-* TODO: TODO
+* Erik Lindstrand: 20 hours*
+* Konstantinos Rokanas: 20 hours*
+* Feride Hansson: 20 hours*
+
+*approximate
 
 Part 1: Insertion sort and quicksort
 ------------------------------------
@@ -29,15 +31,20 @@ Use this to decide which of the two growth rate scenarios fits the runtime bette
 
 | Case | T(1000) | T(10,000) | T(100,000) | (1) or (2)? |
 |------|---------|-----------|------------|-------------|
-| (a)  |         |           |            |             |
-| (b)  |         |           |            |             |
-| (c)  |         |           |            |             |
-| (d)  |         |           |            |             |
-| (e)  |         |           |            |             |
+| (a)  | 19.6 ms |  400 ms   |   29.8 s   |      2      |
+| (b)  | 345 μs  |  1.46 ms  |   6.41 ms  |      1      |
+| (c)  | 1.84 ms |  5.24 ms  |   49,6 ms  |      1      |
+| (d)  | 13.8 ms |   271 ms  |   19.7 s   |      2      |
+| (e)  | 1.82 ms |  5.59 ms  |   36.7 ms  |      1      |
 
 Are there disagreements between this experimental data and your theoretical knowledge?
 
-TODO
+No;
+-Both Insertion sort (a) and worst-case complexity for Quicksort (d) resulted in O(n^2).
+-"Sorting" an already sorted array using Insertion sort (b) will just iterate through the array without performing any
+swap operations, resulting in linear growth.
+-Quicksort with first element as pivot (c) and random input resulted in close to linear growth rate.
+-Quicksort using good pivot selection method (e) avoided worst-case performance when sorting an already sorted array.
 
 Parts 2 and 4: Building the suffix array
 ----------------------------------------
@@ -48,34 +55,54 @@ Abort an algorithm (and skip the rest of its column) once it runs for longer tha
 
 | Text file               | Characters | insertion sort | quicksort | multi-key quicksort |
 |-------------------------|------------| ---------------|-----------|---------------------|
-| texts/bnc-miniscule.txt |      5,000 |                |           |                     |
-| texts/bnc-tiny.txt      |    100,000 |                |           |                     |
-| texts/bnc-mini.txt      |  2,100,000 |                |           |                     |
-| texts/bnc-small.txt     |  5,700,000 |                |           |                     |
-| texts/bnc-medium.txt    | 20,000,000 |                |           |                     |
-| texts/bnc-large.txt     | 57,000,000 |                |           |                     |
+| texts/bnc-miniscule.txt |      5,000 |     181 ms     |  12.7 ms  |        12.9 ms      |
+| texts/bnc-tiny.txt      |    100,000 |     33.6 s     |  87.7 ms  |        86.3 ms      |
+| texts/bnc-mini.txt      |  2,100,000 |       -        |  1.23 s   |        1.08 s       |
+| texts/bnc-small.txt     |  5,700,000 |       -        |  3.62 s   |        2.93 s       |
+| texts/bnc-medium.txt    | 20,000,000 |       -        |  16.8 s   |        12.7 s       |
+| texts/bnc-large.txt     | 57,000,000 |       -        |  62.1 s   |         53 s        |
 
 Pivot strategy used:
-* quicksort: TODO
-* multi-key quicksort: TODO
+* quicksort: ADAPTIVE
+* multi-key quicksort: ADAPTIVE
 
 Does this match your knowledge about the asymptotic complexities of insertion sort and quicksort?
 
-TODO
+Yes, Insertion sort has O(n^2) while Quicksort has the average complexity of (n log(n)).
 
 Based on the above data, do quicksort and multi-key quicksort have the same asymptotic complexity?
 Justify briefly.
 
-TODO
+Yes they appear to as they have very similar growth factor as input size increases.
+
+Below is a table with the values calculated for quicksort and multi-key quicksort:
+
+                          | Characters | Quicksort |                                       |  Multi-key QS   |
+| Text file               |     n      |    T(n)   | T(n) / n log(n) | Multi-key quicksort | T(n) / n log(n) |
+|-------------------------|------------|-----------|-----------------|---------------------|-----------------|
+| texts/bnc-miniscule.txt |      5,000 |  12.7 ms  |2.06706 * 10^(-4)|        12.9 ms      |2.09961 * 10^(-4)|
+| texts/bnc-tiny.txt      |    100,000 |  87.7 ms  |5.27995 * 10^(-5)|        86.3 ms      |5.19567 * 10^(-5)|
+| texts/bnc-mini.txt      |  2,100,000 |  1.23 s   |2.78912 * 10^(-5)|        1.08 s       |2.44898 * 10^(-5)|
+| texts/bnc-small.txt     |  5,700,000 |  3.62 s   |2.82978 * 10^(-5)|        2.93 s       |2.29040 * 10^(-5)|
+| texts/bnc-medium.txt    | 20,000,000 |  16.8 s   |3.46349 * 10^(-5)|        12.7 s       |2.61823 * 10^(-5)|
+| texts/bnc-large.txt     | 57,000,000 |  62.1 s   |4.22867 * 10^(-5)|         53 s        |3.60901 * 10^(-5)|
+
 
 By what factor is multi-key quicksort faster when compared to quicksort?
 
-TODO
+To calculate the factor by which multi-key is faster than quicksort, we divide the time taken by quicksort by the time
+taken by multi-key quicksort for each file.
+
+The range was between 1% to 20% faster. Most results around 20%.
 
 How long do you predict multi-key quicksort to take for texts/bnc-full.txt?
 It contains ca. 570 million characters.
 
-TODO
+Let's assume that the constant C is the same as for the case of n = 57,000,000, that gives us:
+
+T(570,000,000) = (3.60901 * 10^(-5)) * 16,579,020,000
+
+Resulting in approximately 598,338.487 ms, or 598 seconds rounded.
 
 Part 3: Searching using the suffix array
 ----------------------------------------
@@ -84,19 +111,25 @@ Part 3: Searching using the suffix array
 How many string comparisons does one search query in bnc-large.txt perform?
 Explain briefly why (with reference to functions in the code).
 
-TODO
+There is one function call each to findIntervalStart and findIntervalEnd, which means that we perform
+two binary searches to find the query range within the array. Therefore, we do a total of 2 * log(n) string comparisons
+which results in 52 comparisons; 2 * log(57,000,000) ~= 52.
 
 **Question**
 The first number `RunSearchPrompt` prints on each line is the position of each search result.
 As you can see, these numbers are not ordered: they seem to be random.
 Why do you think the results are not shown in increasing order of position?
 
-TODO
+This is because the range we find is no longer in arithmetic order, due to us sorting the array that contains all
+possible (starting) index positions of substrings based on the alphabetic order of the actual substrings. Thus, when we
+get a range of values from our sorted list, it will not appear to be in order if only looking at the (integer) values,
+as opposed to what they represent (starting index positions of substrings in an array).
 
 **Question**
 What could be done to fix this?
 
-TODO
+Copying the range of index positions to a separate (temporary) array and sort it in ascending arithmetic order
+(using for example Quicksort) before printing.
 
 Appendix: general information
 =============================
@@ -104,26 +137,39 @@ Appendix: general information
 **Questions**
 Which spoilers did you use?
 
-TODO
+None for questions 1-3, eventually all spoilers for question 4.
 
 **Question**
 Do you know of any bugs or limitations?
 
-TODO
+When sorting arrays of a size too big, we might get stack overflow exceptions even though our algorithm is technically
+correct. This is due to too many recursive function calls being needed to sort the array. This could be fixed by
+making the sorting algorithm work using loops instead of recursion, as to avoid too many function calls.
+
+The worst case performance of quicksort is dependent on the chosen pivot (method), however, bad performance can be
+mitigated by using good pivot selection methods such as "median of three" or "adaptive".
 
 **Question**
 Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-TODO
+I was again adamant about trying to figure out and solve as much of the lab as possible without external help. All
+aspects of coding were based on what we've learnt in class and the information available to us in form of the course
+material.
+
+As for online resources, the only one we've used has been a logarithmic calculator tool.
 
 **Question**
 Did you encounter any serious problems?
 
-TODO
+- Understanding what to do / comprehending the prebuilt code.
+
+- Multikey quicksort took some time to figure out! :)
 
 **Question**
 What is your feedback on this assignment?
 
-TODO
+Again, a challenging but fun assignment! Overall very good. For question 2 the instructions were somewhat confusing to
+follow at first because of the large amount of information to digest, so it was hard to figure out what we were
+supposed to write/code.

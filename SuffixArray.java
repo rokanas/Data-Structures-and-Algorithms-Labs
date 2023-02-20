@@ -4,9 +4,7 @@ import java.util.AbstractList;
 import java.util.Comparator;
 import java.util.List;
 
-import sorting.LexicographicComparator;
-import sorting.Quicksort;
-import sorting.QuicksortPivotSelector;
+import sorting.*;
 import util.BinarySearch;
 import util.IOIntArray;
 import util.Util;
@@ -53,7 +51,9 @@ public class SuffixArray {
         double time = Util.printTiming("Sorting suffix array", () -> {
 
             // Construct and call one of your sorting algorithms.
-            Quicksort<Integer> algorithm = new Quicksort<>(counting, QuicksortPivotSelector.MEDIAN_OF_THREE);
+            //InsertionSort<Integer> algorithm = new InsertionSort<>(counting);
+            //Quicksort<Integer> algorithm = new Quicksort<>(counting, QuicksortPivotSelector.ADAPTIVE);
+            MultiKeyQuicksort<Integer> algorithm = new MultiKeyQuicksort<>(counting, QuicksortPivotSelector.ADAPTIVE);
             algorithm.sort(sortedSuffixStarts);
 
         });
@@ -129,7 +129,8 @@ public class SuffixArray {
             } else {
                 int iterations = range <= maxNumMatches ? end : start + maxNumMatches;
                 for (int i = start; i < iterations; i++) {
-                    text.printKeywordInContext(sortedSuffixStarts.get(i), (sortedSuffixStarts.get(i) + searchKey.length()), context, trimLines);
+                    text.printKeywordInContext(sortedSuffixStarts.get(i), (sortedSuffixStarts.get(i)
+                            + searchKey.length()), context, trimLines);
                 }
 
                 if (maxNumMatches < range) {
