@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 public class PlagiarismDetector {
 
     // To change to using a scapegoat tree, change the line below by replacing NonbalancingBST with ScapegoatTree
-    static class BST<K extends Comparable<K>, V> extends NonbalancingBST<K, V> { }
+    static class BST<K extends Comparable<K>, V> extends NonbalancingBST<K, V> {
+    }
 
     public static void main(String[] args) throws IOException {
         // If you don't want to specify arguments on the command-line, just uncomment the below block.
@@ -28,7 +29,7 @@ public class PlagiarismDetector {
             System.out.print("Give the path to the document set: ");
             System.out.flush();
             try (Scanner input = new Scanner(System.in)) {
-                args = new String[] { input.nextLine() };
+                args = new String[]{input.nextLine()};
             }
         }
 
@@ -98,38 +99,67 @@ public class PlagiarismDetector {
     // Phase 2: Build index of n-grams (not implemented yet).
     static BST<Ngram, ArrayList<Path>> buildIndex(BST<Path, Ngram[]> files) {
         BST<Ngram, ArrayList<Path>> index = new BST<Ngram, ArrayList<Path>>();
-        // TODO: Build index of n-grams.
+
+        for (Path path : files) {
+            for (Ngram ngram : files.get(path)) {
+                if (index.containsKey(ngram)) {
+                    index.get(ngram).add(path);
+                } else {
+                    ArrayList<Path> paths = new ArrayList<>(Arrays.asList(path));
+                    index.put(ngram, paths);
+                }
+            }
+        }
         return index;
     }
 
     // Phase 3: Count how many n-grams each pair of files has in common.
     static BST<PathPair, Integer> findSimilarity(BST<Path, Ngram[]> files, BST<Ngram, ArrayList<Path>> index) {
-        // TODO: Use index to make this function much more efficient.
+        BST<PathPair, Integer> similarity = new BST<PathPair, Integer>();
+        for (Ngram ngram : index) {
+            ArrayList<Path> paths = index.get(ngram);
+            for (int i = 0; i < paths.size(); i++) {
+                Path path1 = paths.get(i);
+                for (int j = i + 1; j < paths.size(); j++) {
+                    Path path2 = paths.get(j);
+                    PathPair pair = new PathPair(path1, path2);
+                    if (!similarity.containsKey(pair)) {
+                        similarity.put(pair, 0);
+                    }
+                    similarity.put(pair, similarity.get(pair) + 1);
+                }
+            }
+        }
+        return similarity;
+    }
+
+        /* ORIGINAL CODE
         // N.B. Path is Java's class for representing filenames.
         // PathPair represents a pair of Paths (see PathPair.java).
-        BST<PathPair, Integer> similarity = new BST<PathPair, Integer>();
-        for (Path path1 : files) {
-            for (Path path2 : files) {
-                if (path1.equals(path2))
-                    continue;
+            BST<PathPair, Integer> similarity = new BST<PathPair, Integer>();
+            for (Path path1 : files) {
+                for (Path path2 : files) {
+                    if (path1.equals(path2))
+                        continue;
 
-                Ngram[] ngrams1 = files.get(path1);
-                Ngram[] ngrams2 = files.get(path2);
-                for (Ngram ngram1 : ngrams1) {
-                    for (Ngram ngram2 : ngrams2) {
-                        if (ngram1.equals(ngram2)) {
-                            PathPair pair = new PathPair(path1, path2);
-                            if (!similarity.containsKey(pair))
-                                similarity.put(pair, 0);
-                            similarity.put(pair, similarity.get(pair) + 1);
+                    Ngram[] ngrams1 = files.get(path1);
+                    Ngram[] ngrams2 = files.get(path2);
+                    for (Ngram ngram1 : ngrams1) {
+                        for (Ngram ngram2 : ngrams2) {
+                            if (ngram1.equals(ngram2)) {
+                                PathPair pair = new PathPair(path1, path2);
+                                if (!similarity.containsKey(pair))
+                                    similarity.put(pair, 0);
+                                similarity.put(pair, similarity.get(pair) + 1);
+                            }
                         }
-                    }
                 }
             }
         }
 
         return similarity;
     }
+         */
 
     // Phase 4: find all pairs of files with more than 30 n-grams in common, sorted in descending order of similarity.
     static ArrayList<PathPair> findMostSimilar(BST<PathPair, Integer> similarity) {
@@ -138,15 +168,15 @@ public class PlagiarismDetector {
         // This is a bit more complicated than it should be because BST doesn't implement the streaming API.
         // If BST came from the Java standard library, we could just write 'allPathPairs.stream()' or 'similarity.keys().stream()'.
         return StreamSupport.stream(similarity.spliterator(), false)
-            // Keep only distinct pairs with more than 30 n-grams in common.
-            .filter(pair -> !pair.path1.equals(pair.path2) && similarity.get(pair) >= 30)
-            // Remove duplicates - pairs (path1, path2) and (path2, path1).
-            .map(PathPair::canonicalise)
-            .distinct()
-            // Sort to have the most similar pairs first.
-            .sorted(Comparator.comparing(similarity::get).reversed())
-            // Store the result in an ArrayList.
-            .collect(Collectors.toCollection(ArrayList<PathPair>::new));
+                // Keep only distinct pairs with more than 30 n-grams in common.
+                .filter(pair -> !pair.path1.equals(pair.path2) && similarity.get(pair) >= 30)
+                // Remove duplicates - pairs (path1, path2) and (path2, path1).
+                .map(PathPair::canonicalise)
+                .distinct()
+                // Sort to have the most similar pairs first.
+                .sorted(Comparator.comparing(similarity::get).reversed())
+                // Store the result in an ArrayList.
+                .collect(Collectors.toCollection(ArrayList<PathPair>::new));
     }
-
 }
+

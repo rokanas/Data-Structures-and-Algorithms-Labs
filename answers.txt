@@ -2,9 +2,9 @@ Plagiarism detection
 ====================
 
 Time spent per group member:
-* TODO: TODO
-* TODO: TODO
-* TODO: TODO
+* Konstantinos Rokanas:
+* Erik Lindstrand:
+* Feride Hansson:
 
 Task 1: Analyzing the slow program
 ----------------------------------
@@ -15,20 +15,45 @@ Answer in terms of N, the total number of 5-grams in the input files.
 Assume that the number of duplicate occurrences of 5-grams is a small constant - that is, there is not much plagiarised text.
 Explain briefly.
 
-TODO
+findSimilarity consists of four levels of nested for-loops:
+        - 2 for iterating through documents (D^2)
+        - 2 for iterating through ngrams (K^2)
+Therefore, the complexity of the algorithm is D^2 * K^2, or N^2 (expressed in terms of N because N = D * K).
+Since the number of duplicate occurrences of 5-grams is a small constant, we do not need to account for populating the similarity BST when considering the scalability of the algorithm.
+
 
 **Question**
 How long did the program take on the 'small' and 'medium' directories?
 Is the ratio between the times what you would expect,
 given the asymptotic complexity? Explain very briefly why.
 
-TODO
+- On the small directory, the program took 2.77s.
+- On the medium directory, the program took 408.21s.
+We need to compare the ratio of running times between the small and medium directories to the ratio between the expected running times for 20,000 and 200,000 elements
+assuming a complexity of N^2.
+- The ratio between the actual times is 408.21 / 2.77 = growth factor of 147.3
+- The ratio between expected times is (200,000^2) / (20,000^2) = growth factor of 100
+The algorithm's running time, does, therefore, seem to increase quadratically. It runs slower than expected, but this is likely because in our predicted asymptotic complexity,
+we assume that the amount of plagiarized text is constant between directories.
+
+OR: Assuming nlogn scaling
+Log57million = 25.764458583489 so that times 57 million = 1468574139.26 operations
+Log570million = 29.086386678376 so that times 570 million = 16579240406.7 operations
+
+Time for 570M characters = (time for 57M characters) * (number of operations for 570M characters) / (number of operations for 57M characters)
+
+→ 54.1s * 16579240406.7 / 1468574139.26 = 10.1792263 minutes or 610,753578 seconds
 
 **Question**
 How long do you predict the program would take to run on
 the 'huge' directory? Show your calculations.
 
-TODO
+Using the below formula:
+Time for size 4,000,000 = (time for size 200,000) * (number of operations for size 4,000,000) / (number of operations for size 200,000)
+
+Based on our actual results:
+T = 408.21s * (4,000,000^2) / (200,000^2)
+T = 1,632,840,000 seconds OR 27,214,000 minutes OR 453,011.11 hours.
 
 Task 2: Using an index
 ----------------------
