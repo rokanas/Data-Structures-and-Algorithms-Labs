@@ -36,14 +36,6 @@ assuming a complexity of N^2.
 The algorithm's running time, does, therefore, seem to increase quadratically. It runs slower than expected, but this is likely because in our predicted asymptotic complexity,
 we assume that the amount of plagiarized text is constant between directories.
 
-OR: Assuming nlogn scaling
-Log57million = 25.764458583489 so that times 57 million = 1468574139.26 operations
-Log570million = 29.086386678376 so that times 570 million = 16579240406.7 operations
-
-Time for 570M characters = (time for 57M characters) * (number of operations for 570M characters) / (number of operations for 57M characters)
-
-→ 54.1s * 16579240406.7 / 1468574139.26 = 10.1792263 minutes or 610,753578 seconds
-
 **Question**
 How long do you predict the program would take to run on
 the 'huge' directory? Show your calculations.
