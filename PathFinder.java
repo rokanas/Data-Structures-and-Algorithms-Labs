@@ -175,13 +175,13 @@ public class PathFinder<Node> {
             this.elapsedTime = (System.currentTimeMillis() - startTimeMillis) / 1000.0;
         }
 
-        private String formatPathPart(boolean withWeight, boolean suffix, int i, int j) {
+        private String formatPathPart(boolean suffix, int i, int j) {
             return path.subList(i, j).stream()
-                    .map(e -> e.toString(withWeight, !suffix, suffix))
+                    .map(e -> e.toString(!suffix, suffix))
                     .collect(Collectors.joining());
         }
 
-        public String toString(boolean withWeight) {
+        public String toString() {
             StringWriter buffer = new StringWriter();
             PrintWriter w = new PrintWriter(buffer);
             if (iterations <= 0)
@@ -196,8 +196,8 @@ public class PathFinder<Node> {
                     // Print path.
                     w.println("Number of edges: " + path.size());
                     w.println(path.size() <= 10 ?
-                        start + formatPathPart(withWeight, true, 0, path.size()) :
-                        formatPathPart(withWeight, false, 0, 5) + "....." + formatPathPart(withWeight, true, path.size() - 5, path.size())
+                        start + formatPathPart(true, 0, path.size()) :
+                        formatPathPart(false, 0, 5) + "....." + formatPathPart(true, path.size() - 5, path.size())
                     );
                     // We sum using left association order to mimic the algorithm.
                     // Then we can use exact comparison of doubles.
@@ -208,11 +208,6 @@ public class PathFinder<Node> {
             } else
                 w.println("No path found from " + start + " to " + goal);
             return buffer.toString();
-        }
-
-        @Override
-        public String toString() {
-            return toString(false);
         }
 
     }

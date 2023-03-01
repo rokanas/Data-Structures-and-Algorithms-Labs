@@ -112,13 +112,17 @@ public class DirectedEdge<Node> {
         return fromStr + (withWeight ? " --[" + DECIMAL_FORMAT.format(weight) + "]-> " : " -> ") + toStr;
     }
 
+    public String toString(boolean includeFrom, boolean includeTo) {
+        return toString(weight != 1.0, includeFrom, includeTo);
+    }
+
     /**
      * @return a string representation of the directed edge
      * (the weight is omitted if it is 1.0)
      */
     @Override
     public String toString() {
-        return toString(weight != 1.0, true, true);
+        return toString(true, true);
     }
 
     /**
