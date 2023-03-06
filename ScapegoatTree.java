@@ -146,18 +146,29 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         int cmp = key.compareTo(node.key);
 
-        // TODO: finish implementing put.
         // If you like you can start from the code for put in NonbalancingBST.java.
         // Read the lab instructions for more hints!
         if (cmp < 0) {
             // key is less than node.key
+            node.left = put(node.left,  key, val);
         } else if (cmp > 0) {
             // key is greater than node.key
+            node.right = put(node.right, key, val);
         } else {
             // key is equal to node.key
+            node.val = val;
         }
 
-        throw new UnsupportedOperationException();
+        node.size = size(node.left) + size(node.right) + 1;
+
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        int height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
+
+        if(height > alpha * log2(node.size + 1)) {
+            rebuild(node);
+        }
+        return node;
     }
 
     // Rebuild a tree to make it perfectly balanced.
@@ -177,9 +188,13 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
     // Perform an in-order traversal of the subtree rooted at 'node'.
     // The nodes encountered are stored in the ArrayList 'nodes'.
     private void inorder(Node node, ArrayList<Node> nodes) {
-        // TODO: use in-order traversal to store 'node'
         // and all descendants into 'nodes' ArrayList
-        throw new UnsupportedOperationException();
+        if(node == null) {
+            return;
+        }
+        inorder(node.left, nodes);
+        nodes.add(node);
+        inorder(node.right,nodes);
     }
 
     // Construct a balanced BST out of the nodes in `nodes` between `lo` and `hi`.
@@ -189,20 +204,47 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
         if (lo > hi)
             return null;
 
-        // TODO: finish this method.
-        //
         // The algorithm uses divide and conquer.
         // Here is how it should work.
-        //
+
         // (1) Find the midpoint `mid` of the range given by `lo` and `hi`.
+        int mid = (lo + hi) / 2;
+
         // (2) Recursively call balanceNodes on two subarrays:
         //     (a) everything left of 'mid'
         //     (b) everything right of 'mid'
+        Node left = balanceNodes(nodes, lo, mid - 1);
+        Node right = balanceNodes(nodes, mid + 1, hi);
+
         // (3) Make a node containing the key/value at index 'mid', which will be the root of the returned BST.
+        Node root = nodes.get(mid);
+
         // (4) Set the node's children to the BSTs returned by the two recursive calls you made in step (1).
+        root.left = left;
+        root.right = right;
+
         // (5) Correctly set the 'size' and 'height' fields for the node.
+        int leftSize = size(left);
+        int rightSize = size(right);
+        int size = leftSize + rightSize + 1;    //+1 is for the root node
+
+        // int leftSize = (left != null) ? left.size : 0;
+        // int rightSize = (right != null) ? right.size : 0;
+        // int size = leftSize + rightSize + 1;    //+1 is for the root node
+
+        int leftHeight = height(left);
+        int rightHeight = height(right);
+        int height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
+
+        // int leftHeight = (left != null) ? left.height : 0;
+        // int rightHeight = (right != null) ? right.height : 0;
+        // int height = (leftHeight > rightHeight) ? leftHeight : rightHeight;
+
+        root.size = size;
+        root.height = height;
+
         // (6) Return the node!
-        throw new UnsupportedOperationException();
+        return root;
     }
 
     /**

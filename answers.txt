@@ -45,7 +45,8 @@ Time for size 4,000,000 = (time for size 200,000) * (number of operations for si
 
 Based on our actual results:
 T = 408.21s * (4,000,000^2) / (200,000^2)
-T = 1,632,840,000 seconds OR 27,214,000 minutes OR 453,011.11 hours.
+T = 1,632,840,000 seconds OR 27,214,000 minutes OR 453,011.11 hours. //WRONG - somehow did calculation wrong
+T = 163,284 seconds //RIGHT
 
 Task 2: Using an index
 ----------------------
