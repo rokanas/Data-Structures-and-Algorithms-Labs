@@ -163,10 +163,10 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         int leftHeight = height(node.left);
         int rightHeight = height(node.right);
-        int height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
+        node.height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
 
-        if(height > alpha * log2(node.size + 1)) {
-            rebuild(node);
+        if(node.height > alpha * log2(node.size + 1)) {
+            return rebuild(node);
         }
         return node;
     }
@@ -224,21 +224,11 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
         root.right = right;
 
         // (5) Correctly set the 'size' and 'height' fields for the node.
-        int leftSize = size(left);
-        int rightSize = size(right);
-        int size = leftSize + rightSize + 1;    //+1 is for the root node
-
-        // int leftSize = (left != null) ? left.size : 0;
-        // int rightSize = (right != null) ? right.size : 0;
-        // int size = leftSize + rightSize + 1;    //+1 is for the root node
+        int size = size(left) + size(right) + 1;    //+1 is for the root node
 
         int leftHeight = height(left);
         int rightHeight = height(right);
         int height = ((leftHeight > rightHeight) ? leftHeight : rightHeight) + 1;
-
-        // int leftHeight = (left != null) ? left.height : 0;
-        // int rightHeight = (right != null) ? right.height : 0;
-        // int height = (leftHeight > rightHeight) ? leftHeight : rightHeight;
 
         root.size = size;
         root.height = height;
