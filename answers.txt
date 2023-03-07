@@ -2,9 +2,9 @@ Plagiarism detection
 ====================
 
 Time spent per group member:
-* Konstantinos Rokanas:
-* Erik Lindstrand:
-* Feride Hansson:
+* Konstantinos Rokanas: 16 hours
+* Erik Lindstrand: 16 hours
+* Feride Hansson: 16 hours
 
 Task 1: Analyzing the slow program
 ----------------------------------
@@ -19,7 +19,8 @@ findSimilarity consists of four levels of nested for-loops:
         - 2 for iterating through documents (D^2)
         - 2 for iterating through ngrams (K^2)
 Therefore, the complexity of the algorithm is D^2 * K^2, or N^2 (expressed in terms of N because N = D * K).
-Since the number of duplicate occurrences of 5-grams is a small constant, we do not need to account for populating the similarity BST when considering the scalability of the algorithm.
+Since the number of duplicate occurrences of 5-grams is a small constant, we do not need to account for populating the
+similarity BST when considering the scalability of the algorithm.
 
 
 **Question**
@@ -29,24 +30,33 @@ given the asymptotic complexity? Explain very briefly why.
 
 - On the small directory, the program took 2.77s.
 - On the medium directory, the program took 408.21s.
-We need to compare the ratio of running times between the small and medium directories to the ratio between the expected running times for 20,000 and 200,000 elements
-assuming a complexity of N^2.
+We need to compare the ratio of running times between the small and medium directories to the ratio between the
+expected running times for 20,000 and 200,000 elements assuming a complexity of N^2.
 - The ratio between the actual times is 408.21 / 2.77 = growth factor of 147.3
 - The ratio between expected times is (200,000^2) / (20,000^2) = growth factor of 100
-The algorithm's running time, does, therefore, seem to increase quadratically. It runs slower than expected, but this is likely because in our predicted asymptotic complexity,
-we assume that the amount of plagiarized text is constant between directories.
+The algorithm's running time, does, therefore, seem to increase quadratically. It runs slower than expected, but this
+is likely because in our predicted asymptotic complexity,we assume that the amount of plagiarized text is constant
+between directories.
+
 
 **Question**
 How long do you predict the program would take to run on
 the 'huge' directory? Show your calculations.
 
-Using the below formula:
-Time for size 4,000,000 = (time for size 200,000) * (number of operations for size 4,000,000) / (number of operations for size 200,000)
+| Directory               |     N      |   T(N)    |     T(N) / N^2     |
+|-------------------------|------------|-----------|--------------------|
+| documents/small         |     20,000 |  2.77 s   |  6.925 * 10^(-9)   |
+| documents/medium        |    200,000 | 408.21 s  | 1.020525 * 10^(-8) |
+| documents/huge          |  4,000,000 |     -     |         -          |
 
-Based on our actual results:
-T = 408.21s * (4,000,000^2) / (200,000^2)
-T = 1,632,840,000 seconds OR 27,214,000 minutes OR 453,011.11 hours. //WRONG - somehow did calculation wrong
-T = 163,284 seconds //RIGHT
+
+Using the same constant C as calculated above for documents/medium, and the formula T(N) = C * N^(2), we get:
+
+(1.020525 * 10^(-8)) * 4,000,000^(2) = 163,284 seconds,
+OR 2,721.4 minutes,
+OR ~ 44.4 hours,
+OR ~ 1.9 days.
+
 
 Task 2: Using an index
 ----------------------
@@ -57,12 +67,17 @@ Say very briefly:
 - how you observed this,
 - why you think this is the case.
 
-TODO
+The "files" BST usually becomes unbalanced. This is something we first noticed in the balance statistics that is shown
+when running the program as well as by looking in the folders containing the text-files and taking note of the fact that
+they are sorted in alphabetical order. The input will be read in this same order and without implementing a
+self-balancing BST we get what is essentially a linked list, as all items will be added as the right-child of the
+previously added node. This same phenomenon can also be observed when running the "badforbst" collection of files
+(instead this time with the "index" BST).
 
 **Question** (optional)
 Is there a simple way to stop these trees becoming unbalanced?
 
-TODO (optional)
+By making use of a self-balancing BST of your choice! (Such as a scapegoat tree.)
 
 Task 3: Using scapegoat trees instead of BSTs
 ---------------------------------------------
@@ -74,13 +89,28 @@ We assume there is a (small) constant number of duplicate occurrences of 5-grams
 What is the asymptotic complexity of buildIndex?
 Justify briefly.
 
-TODO
+The asymptotic complexity of buildIndex is: O(n * log(n))
+
+Creating or adding to an array takes O(1) time - so the operations performed on line 106 and 108 both take constant
+time, however, finding the correct place in the Scapegoat tree takes O(log(n)) time, which is the dominant factor,
+making the overall complexity of the operations from line 105 - 109 O(log(n)) time.
+
+These operations lie within two nested for-loops, one to iterate through the n-grams (line 104) and one to iterate
+through each file(path) (line 103) - leading to a complexity of O(K) * O(D) which can be simplified to O(n). Which
+gives us O(n) * O(log(n), or O(n * log(n)).
+
 
 **Question**
 What is the asymptotic complexity of findSimilarity?
 Justify briefly.
 
-TODO
+The asymptotic complexity of findSimilarity is: O(n)
+
+With the assumption that the duplicate n-grams are a small constant, we can ignore the impact of populating the
+similarity-tree. This means that the operations (including the nested inner loops) within the outer for-loop that
+traverses the index-tree, do not affect the growth factor and are of constant time O(1), resulting in O(n) time spent
+to visit all the nodes in the tree.
+
 
 **Question** (optional)
 Instead of the previous assumption, we now allow an arbitrary total similarity score S.
@@ -94,21 +124,23 @@ Appendix: general information
 **Question**
 Do you know of any bugs or limitations?
 
-TODO
+None that we know of.
 
 **Question**
 Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-TODO
+We did not collaborate with anyone.
+We again used an online log2 calculator tool.
 
 **Question**
 Did you encounter any serious problems?
 
-TODO
+No! :)
 
 **Question**
 What is your feedback on this assignment?
 
-TODO
+Again, a bit hard to understand parts of the instructions, in particular the impact some assumptions had on the
+complexity calculations, but overall interesting!
