@@ -1,12 +1,6 @@
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -88,14 +82,26 @@ public class PathFinder<Node> {
      */
     public Result searchUCS(Node start, Node goal) {
         int iterations = 0;
+
         Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.costToHere));
+        pqueue.add(new PQEntry(start,0, null, null));
 
-        /*************************************************************************************************
-         * TODO: Task 1a+c                                                                               *
-         * Replace this.                                                                                 *
-         * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
-         *************************************************************************************************/
+        Set<Node> visited = new HashSet<>();
 
+        while(!pqueue.isEmpty()) {
+            iterations++;
+            PQEntry current = pqueue.remove();
+            if(visited.contains(current.node)) {
+                continue;
+            }
+            visited.add(current.node);
+            if(current.node.equals(goal)) {
+                return new Result(true, start, goal, current.costToHere, extractPath(current), iterations);
+            }
+            for (DirectedEdge<Node> directedEdge : graph.outgoingEdges(current.node)) {
+                pqueue.add(new PQEntry(directedEdge.to(), current.costToHere + directedEdge.weight(), directedEdge, current));
+            }
+        }
         // Return this if no path is found.
         return new Result(false, start, goal, -1, null, iterations);
     }
@@ -124,11 +130,20 @@ public class PathFinder<Node> {
      * @return the path from start to goal as a list of edges
      */
     private List<DirectedEdge<Node>> extractPath(PQEntry entry) {
-        /*****************
-         * TODO: Task 1b *
-         * Replace this. *
-         *****************/
-        return null;
+        List<DirectedEdge<Node>> path = new ArrayList<>();
+
+        PQEntry current = entry;
+        Stack<DirectedEdge<Node>> temp = new Stack();
+
+        while(current.backPointer != null) {
+            temp.add(current.lastEdge);
+            current = current.backPointer;
+        }
+
+        while(!temp.isEmpty()) {
+            path.add(temp.pop());
+        }
+        return path;
     }
 
     /**
