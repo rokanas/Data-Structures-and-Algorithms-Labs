@@ -166,16 +166,16 @@ connections between given words might not be straight-forward due to the fact th
 (in one way; we can interpret this as obstacles).
 
 So on one hand the size of the graph seems to play an effect, but the main improvement comes from how the
-heuristic value guides the algorithm towards the goal, by helping it make the "right" choice at every step. For example:
+heuristic guides the algorithm towards the goal, by helping it make the "right" choice at every step. For example:
 the outgoing edges E from an arbitrary node N might all be of the same "costToHere", but the connecting nodes might
 differ in their estimated cost. The benefit of this is that it makes the graph "skewed" towards the goal, such that the
-algorithm is more likely to choose a next node in the graph that takes it close to the goal, thus we avoid exploring
-nodes that we otherwise would've been picked from the Priority Queue. This can be visualised with an open graph where
-the edges are of equal weight (every step in any direction costs the same) and we want to get from an arbitrary point
-A to point B; where UCS would spread out evenly until it finds B, A* will quickly move towards the goal. However, the
-effectiveness of this (the manhattan/euclidean heuristic) is lessened when we introduce obstacles into the graph,
-something that is prevalent in both WordLadder and GridGraph - but much less so in NPuzzle. All in all, this leads to
-the NPuzzle seeing the most improvement.
+algorithm is more likely to next choose a node in the graph that takes it closer to the goal, thus we avoid exploring
+nodes that might've otherwise been picked from the Priority Queue. This can be visualised with an open graph where
+all edges are of equal weight, and we want to get from an arbitrary point A to point B; where UCS would spread out
+evenly (in some regard) until it finds B, A* will move towards the goal. However, the effectiveness of this
+(the manhattan-/euclidean-based heuristic) is lessened when we introduce obstacles into the graph, something that is
+prevalent in both WordLadder and GridGraph - but less in NPuzzle. Which is what could lead to the NPuzzle seeing the most
+improvement.
 
 **Question**
 What are the main differences between your implementations of searchAstar and searchUCS?
