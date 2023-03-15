@@ -2,9 +2,9 @@ Path finder
 ===========
 
 Time spent per group member:
-* TODO: TODO
-* TODO: TODO
-* TODO: TODO
+* Erik Lindstrand: TODO
+* Feride Hansson: TODO
+* Konstantinos Rokanas: TODO
 
 All tasks
 ---------
@@ -19,49 +19,57 @@ After completing each task, you can fill in more data here.
 
 > java RunPathFinder ucs AdjacencyGraph graphs/AdjacencyGraph/citygraph-SE.txt Lund Kiruna
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 5427
+minimal cost:    1826
+shortest path:   31 edges:
+Lund --[16]-> Löddeköpinge --[69]-> Hjärnarp --[52]-> Åled --[6]-> Oskarström --[22]-> .....
+--[68]-> Storuman --[71]-> Sorsele --[233]-> Jokkmokk --[93]-> Gällivare --[121]-> Kiruna
 
 > java RunPathFinder ucs NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 483540
+minimal cost:    31
+shortest path:   31 edges:
+/HFG/BED/C_A/ -> /HFG/BED/CA_/ -> /HFG/BE_/CAD/ -> /HF_/BEG/CAD/ -> /H_F/BEG/CAD/ -> .....
+-> /AEB/D_C/GHF/ -> /A_B/DEC/GHF/ -> /AB_/DEC/GHF/ -> /ABC/DE_/GHF/ -> /ABC/DEF/GH_/
 
 > java RunPathFinder astar NPuzzle 3 /HFG/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: TODO
-minimal cost:    TODO
+loop iterations: 11013
+minimal cost:    31
 
 > java RunPathFinder ucs NPuzzle 3 /HGF/BED/C_A/ /ABC/DEF/GH_/
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 483841
+minimal cost:    null
+shortest path:   No path found
 
 > java RunPathFinder ucs GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 159327
+minimal cost:    366,4
+shortest path:   308 edges:
+23:161 -> 23:160 -> 23:159 -> 23:158 -> 23:157 -> .....
+--[1,41]-> 132:207 --[1,41]-> 131:208 -> 131:209 --[1,41]-> 130:210 -> 130:211
 
 > java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: TODO
-minimal cost:    TODO
+loop iterations: 95505
+minimal cost:    366,4
 
 > java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 71182
+minimal cost:    11
+shortest path:   11 edges:
+syster -> sylter -> sylten -> synten -> synden -> ..... -> bauden -> bruden -> bröden -> bröder -> broder
 
 > java RunPathFinder astar WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
 
-loop iterations: TODO
-minimal cost:    TODO
-shortest path:   TODO
+loop iterations: 7055
+minimal cost:    11
+shortest path:   11 edges:
+syster -> sylter -> sylten -> synten -> synden -> ..... -> bauden -> bruden -> bröden -> bröder -> broder
 
 Task 2: Word ladder
 -------------------
@@ -69,7 +77,8 @@ Task 2: Word ladder
 **Question**
 What's the asymptotic average-case complexity of WordLadder.outgoingEdges in the alphabet size K and the length N of the given word?
 
-TODO
+Average case: O(K * N^2)
+(N-squared due to the substring operation(s))
 
 Tasks 3 and 4: The A* algorithm, Guessing the cost
 --------------------------------------------------
@@ -91,7 +100,10 @@ TODO
 **Question**
 What are the main differences between your implementations of searchAstar and searchUCS?
 
-TODO
+While searchUCS only makes use of the costToHere attribute of the PQEntries when deciding the priority of the
+PriorityQueue; searchAstar also uses the costEstimate attribute - making it the comparing attribute instead. Meaning we
+take into consideration not just the cost to get to a certain node, but in addition an estimation of the remaining
+distance to the goal from that node.
 
 Appendix: general information
 =============================
@@ -106,14 +118,21 @@ Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-TODO
+-
 
 **Question**
 Did you encounter any serious problems?
 
+No! :)
+
 TODO
+Although the way the guessCost() works for GridGraph is still somewhat confusing. Following the instructions would
+still not give me as low a number of iterations as in the example provided by you. And when using the manhattanNorm()
+function (which returns a "rounded" integer instead of a double) we get an even lower number of iterations than in the
+provided example.
 
 **Question**
 What is your feedback on this assignment?
 
-TODO
+Less challenging than the prior labs (not a complaint) but still fun! Was very satisfying to see the number of
+iterations go down and overall optimise our program.

@@ -128,11 +128,7 @@ public class GridGraph implements DirectedGraph<Point> {
      */
     @Override
     public double guessCost(Point p, Point q) {
-        /*****************
-         * TODO: Task 4  *
-         * Replace this. *
-         *****************/
-        return 0;
+        return p.subtract(q).euclideanNorm();
     }
 
     /**

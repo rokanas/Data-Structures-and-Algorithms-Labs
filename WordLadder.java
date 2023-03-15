@@ -3,11 +3,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -67,11 +63,16 @@ public class WordLadder implements DirectedGraph<String> {
      */
     @Override
     public List<DirectedEdge<String>> outgoingEdges(String w) {
-        /*****************
-         * TODO: Task 2  *
-         * Replace this. *
-         *****************/
-        return new LinkedList<>();
+        List<DirectedEdge<String>> edges = new LinkedList<>();
+        for (int i = 0; i < w.length(); i++) {
+            for(Character character : alphabet) {
+                String newWord = w.substring(0, i) + character + w.substring(i + 1);
+                if (dictionary.contains(newWord) && !newWord.equals(w)) {
+                    edges.add(new DirectedEdge<>(w, newWord, 1));
+                }
+            }
+        }
+        return edges;
     }
 
     /**
@@ -82,11 +83,13 @@ public class WordLadder implements DirectedGraph<String> {
      */
     @Override
     public double guessCost(String w, String u) {
-        /*****************
-         * TODO: Task 4  *
-         * Replace this. *
-         *****************/
-        return 0;
+        int difference = 0;
+        for (int i = 0; i < w.length(); i++) {
+            if (w.charAt(i) != u.charAt(i)) {
+                difference++;
+            }
+        }
+        return difference;
     }
 
     @Override

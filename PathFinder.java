@@ -1,12 +1,6 @@
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -88,15 +82,25 @@ public class PathFinder<Node> {
      */
     public Result searchUCS(Node start, Node goal) {
         int iterations = 0;
+        HashSet<Node> visited = new HashSet<>();
         Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.costToHere));
+        pqueue.add(new PQEntry(start, 0, null, null));
 
-        /*************************************************************************************************
-         * TODO: Task 1a+c                                                                               *
-         * Replace this.                                                                                 *
-         * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
-         *************************************************************************************************/
-
-        // Return this if no path is found.
+        while (!pqueue.isEmpty()) {
+            iterations++;
+            PQEntry current = pqueue.remove();
+            if (visited.contains(current.node)) {
+                continue;
+            }
+            visited.add(current.node);
+            if (current.node.equals(goal)) {
+                return new Result(true, start, goal, current.costToHere, extractPath(current), iterations);
+            }
+            for (DirectedEdge<Node> outGoingEdge : graph.outgoingEdges(current.node)) {
+                pqueue.add(new PQEntry(outGoingEdge.to(), current.costToHere + outGoingEdge.weight(),
+                        outGoingEdge, current));
+            }
+        }
         return new Result(false, start, goal, -1, null, iterations);
     }
 
@@ -107,14 +111,25 @@ public class PathFinder<Node> {
      */
     public Result searchAstar(Node start, Node goal) {
         int iterations = 0;
+        HashSet<Node> visited = new HashSet<>();
+        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.costEstimate));
+        pqueue.add(new PQEntry(start, 0, null, null));
 
-        /*************************************************************************************************
-         * TODO: Task 3                                                                                  *
-         * Replace this.                                                                                 *
-         * Note: Every time you remove a node from the priority queue, you should increment `iterations` *
-         *************************************************************************************************/
-
-        // Return this if no path is found.
+        while (!pqueue.isEmpty()) {
+            iterations++;
+            PQEntry current = pqueue.remove();
+            if (visited.contains(current.node)) {
+                continue;
+            }
+            visited.add(current.node);
+            if (current.node.equals(goal)) {
+                return new Result(true, start, goal, current.costToHere, extractPath(current), iterations);
+            }
+            for (DirectedEdge<Node> outGoingEdge : graph.outgoingEdges(current.node)) {
+                pqueue.add(new PQEntry(outGoingEdge.to(), current.costToHere + outGoingEdge.weight(),
+                        outGoingEdge, current, current.costToHere + graph.guessCost(outGoingEdge.to(), goal)));
+            }
+        }
         return new Result(false, start, goal, -1, null, iterations);
     }
 
@@ -124,11 +139,13 @@ public class PathFinder<Node> {
      * @return the path from start to goal as a list of edges
      */
     private List<DirectedEdge<Node>> extractPath(PQEntry entry) {
-        /*****************
-         * TODO: Task 1b *
-         * Replace this. *
-         *****************/
-        return null;
+        List<DirectedEdge<Node>> path = new ArrayList<>();
+        while(entry.lastEdge != null) {
+            path.add(entry.lastEdge);
+            entry = entry.backPointer;
+        }
+        Collections.reverse(path);
+        return path;
     }
 
     /**
@@ -139,17 +156,21 @@ public class PathFinder<Node> {
         public final double costToHere;
         public final DirectedEdge<Node> lastEdge;  // null for starting entry
         public final PQEntry backPointer;          // null for starting entry
-
-        /************************************************
-         * TODO: Task 3                                 *
-         * You can add new fields or constructors here. *
-         ************************************************/
+        public double costEstimate = 0;
 
         PQEntry(Node node, double costToHere, DirectedEdge<Node> lastEdge, PQEntry backPointer) {
             this.node = node;
             this.costToHere = costToHere;
             this.lastEdge = lastEdge;
             this.backPointer = backPointer;
+        }
+
+        PQEntry(Node node, double costToHere, DirectedEdge<Node> lastEdge, PQEntry backPointer, double costEstimate) {
+            this.node = node;
+            this.costToHere = costToHere;
+            this.lastEdge = lastEdge;
+            this.backPointer = backPointer;
+            this.costEstimate = costEstimate;
         }
     }
 
