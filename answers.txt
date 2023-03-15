@@ -2,9 +2,9 @@ Path finder
 ===========
 
 Time spent per group member:
-* Erik Lindstrand: TODO
-* Feride Hansson: TODO
-* Konstantinos Rokanas: TODO
+* Erik Lindstrand: 15 hours
+* Feride Hansson: 15 hours
+* Konstantinos Rokanas: 15 hours
 
 All tasks
 ---------
@@ -78,7 +78,7 @@ Task 2: Word ladder
 What's the asymptotic average-case complexity of WordLadder.outgoingEdges in the alphabet size K and the length N of the given word?
 
 Average case: O(K * N^2)
-(N-squared due to the substring operation(s))
+(N-squared due to the substring operation(s) within the inner loop)
 
 Tasks 3 and 4: The A* algorithm, Guessing the cost
 --------------------------------------------------
@@ -88,30 +88,102 @@ For each of the three classes GridGraph, WordLadder, and NPuzzle, what is the ap
 Try a number of different examples per class.
 
 - GridGraph:
+
 GridGraph/AR0012SR.map 11:73 90:105:
 - UCS: 28689
 - A*:  6068
+Improvement factor: 28689 / 6068 = 4.73 times faster
 
 GridGraph/AR0011SR.map 17:68 183:127
 - UCS: 121235
 - A*:  27034
+Improvement factor: 121235 / 27034 = 4.48 times faster
 
-- WordLadder: TODO
-- NPuzzle:    TODO
+GridGraph/maze-100x50.txt 1:1 199:99
+- UCS: 26478
+- A*:  25453
+Improvement factor: 26478 / 25453 = 1.04 times faster
+
+
+Average improvement factor: 3.42
+
+--------------
+- WordLadder:
+
+WordLadder/swedish-saldo.txt furste tradig
+- UCS: 135190
+- A*:  119789
+Improvement factor: 135190 / 119789 = 1.13 times faster
+
+WordLadder/english-crossword.txt scary hairy
+- UCS: 4321
+- A*:  61
+Improvement factor: 4321 / 61 = 71.84 times faster
+
+WordLadder/swedish-romaner.txt skorv tungt
+- UCS: 6365
+- A*:  3788
+Improvement factor: 6365 / 3788 = 1.68 times faster
+
+
+Average improvement factor: 24.88
+
+--------------
+- NPuzzle:
+
+NPuzzle 3 /HFG/BED/CA/ /ABC/DEF/GH/
+- UCS: 483540
+- A: 11013
+Improvement factor: 483540 / 11013 = 43.91 times faster
+
+NPuzzle 3 /ABC/DEF/GH_/ /_HG/FED/CBA/
+- UCS: 458614
+- A*:  404
+Improvement factor: 458614 / 404 = 1135.18 times faster
+
+NPuzzle 3 /A_B/HCG/FDE/ /_AH/BGC/FDE/
+- UCS: 24849
+- A*:  309
+Improvement factor: 24849 / 309 = 80.42 times faster
+
+
+Average improvement factor: 419,84
 
 **Question**
 For which of the three classes GridGraph, WordLadder, and NPuzzle, did the heuristic guessCost have the most impact?
 What do you think is the reason for this?
 
-TODO
+N puzzle!
+- it has 9! - or 362880, different states, of which 9!/2 are solvable configurations due to the fact that a given
+starting state can reach half of the possible states.
+
+- The biggest GridGraph has 224 * 216 = 48384, number of different points, which is disregarding invalid coordinates due
+to obstacles etc. These are (often) packed with obstacles and twists and turns.
+
+- The biggest WordLadder document has 888275 number of words, but we only look at subset of these with N length. There
+will also be disconnected parts of the graph due to there being no connection between different subsets of words, and
+connections between given words might not be straight-forward due to the fact that we need to travel along valid words
+(in one way; we can interpret this as obstacles).
+
+So on one hand the size of the graph seems to play an effect, but the main improvement comes from how the
+heuristic value guides the algorithm towards the goal, by helping it make the "right" choice at every step. For example:
+the outgoing edges E from an arbitrary node N might all be of the same "costToHere", but the connecting nodes might
+differ in their estimated cost. The benefit of this is that it makes the graph "skewed" towards the goal, such that the
+algorithm is more likely to choose a next node in the graph that takes it close to the goal, thus we avoid exploring
+nodes that we otherwise would've been picked from the Priority Queue. This can be visualised with an open graph where
+the edges are of equal weight (every step in any direction costs the same) and we want to get from an arbitrary point
+A to point B; where UCS would spread out evenly until it finds B, A* will quickly move towards the goal. However, the
+effectiveness of this (the manhattan/euclidean heuristic) is lessened when we introduce obstacles into the graph,
+something that is prevalent in both WordLadder and GridGraph - but much less so in NPuzzle. All in all, this leads to
+the NPuzzle seeing the most improvement.
 
 **Question**
 What are the main differences between your implementations of searchAstar and searchUCS?
 
 While searchUCS only makes use of the costToHere attribute of the PQEntries when deciding the priority of the
-PriorityQueue; searchAstar also uses the costEstimate attribute - making it the comparing attribute instead. Meaning we
-take into consideration not just the cost to get to a certain node, but in addition an estimation of the remaining
-distance to the goal from that node.
+PriorityQueue; searchAstar also uses the costEstimate attribute - making it the comparing attribute instead (in addition
+to costToHere). Meaning we take into consideration not just the cost to get to a certain node, but in addition an
+estimation of the remaining distance to the goal from that node.
 
 Appendix: general information
 =============================
@@ -119,14 +191,14 @@ Appendix: general information
 **Question**
 Do you know of any bugs or limitations?
 
-TODO
+I wanna try 15-puzzles ;_;
 
 **Question**
 Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-No, and none.
+No, and none (although we opened the wikipedia article that you linked to).
 
 **Question**
 Did you encounter any serious problems?
