@@ -54,7 +54,7 @@ shortest path:   308 edges:
 
 > java RunPathFinder astar GridGraph graphs/GridGraph/AR0011SR.map 23:161 130:211
 
-loop iterations: 95505
+loop iterations: 95160
 minimal cost:    366,4
 
 > java RunPathFinder ucs WordLadder graphs/WordLadder/swedish-saldo.txt syster broder
@@ -87,7 +87,15 @@ Tasks 3 and 4: The A* algorithm, Guessing the cost
 For each of the three classes GridGraph, WordLadder, and NPuzzle, what is the approximate improvement factor in the number of loop iterations by running A* instead of UCS?
 Try a number of different examples per class.
 
-- GridGraph:  TODO
+- GridGraph:
+GridGraph/AR0012SR.map 11:73 90:105:
+- UCS: 28689
+- A*:  6068
+
+GridGraph/AR0011SR.map 17:68 183:127
+- UCS: 121235
+- A*:  27034
+
 - WordLadder: TODO
 - NPuzzle:    TODO
 
@@ -118,18 +126,12 @@ Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
--
+No, and none.
 
 **Question**
 Did you encounter any serious problems?
 
 No! :)
-
-TODO
-Although the way the guessCost() works for GridGraph is still somewhat confusing. Following the instructions would
-still not give me as low a number of iterations as in the example provided by you. And when using the manhattanNorm()
-function (which returns a "rounded" integer instead of a double) we get an even lower number of iterations than in the
-provided example.
 
 **Question**
 What is your feedback on this assignment?

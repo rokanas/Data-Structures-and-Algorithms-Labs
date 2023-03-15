@@ -112,7 +112,7 @@ public class PathFinder<Node> {
     public Result searchAstar(Node start, Node goal) {
         int iterations = 0;
         HashSet<Node> visited = new HashSet<>();
-        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.costEstimate));
+        Queue<PQEntry> pqueue = new PriorityQueue<>(Comparator.comparingDouble(e -> e.costToHere + e.costEstimate));
         pqueue.add(new PQEntry(start, 0, null, null));
 
         while (!pqueue.isEmpty()) {
@@ -127,7 +127,7 @@ public class PathFinder<Node> {
             }
             for (DirectedEdge<Node> outGoingEdge : graph.outgoingEdges(current.node)) {
                 pqueue.add(new PQEntry(outGoingEdge.to(), current.costToHere + outGoingEdge.weight(),
-                        outGoingEdge, current, current.costToHere + graph.guessCost(outGoingEdge.to(), goal)));
+                        outGoingEdge, current, graph.guessCost(outGoingEdge.to(), goal)));
             }
         }
         return new Result(false, start, goal, -1, null, iterations);
