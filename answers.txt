@@ -155,7 +155,7 @@ What do you think is the reason for this?
 
 N puzzle!
 - it has 9! - or 362880, different states, of which 9!/2 are solvable configurations due to the fact that a given
-starting state can reach half of the possible states.
+starting state can reach half of the possible states.[0]
 
 - The biggest GridGraph has 224 * 216 = 48384, number of different points, which is disregarding invalid coordinates due
 to obstacles etc. These are (often) packed with obstacles and twists and turns.
@@ -174,8 +174,8 @@ nodes that might've otherwise been picked from the Priority Queue. This can be v
 all edges are of equal weight, and we want to get from an arbitrary point A to point B; where UCS would spread out
 evenly (in some regard) until it finds B, A* will move towards the goal. However, the effectiveness of this
 (the manhattan-/euclidean-based heuristic) is lessened when we introduce obstacles into the graph, something that is
-prevalent in both WordLadder and GridGraph - but less in NPuzzle. Which is what could lead to the NPuzzle seeing the most
-improvement.
+prevalent in both WordLadder and GridGraph - but less in NPuzzle. Which is what could lead to the NPuzzle seeing the
+most improvement.
 
 **Question**
 What are the main differences between your implementations of searchAstar and searchUCS?
@@ -198,7 +198,13 @@ Did you collaborate with any other students on this lab?
 If so, write with whom and in what way you collaborated.
 Also list any resources (including the web) you have used in creating your design.
 
-No, and none (although we opened the wikipedia article that you linked to).
+No collaborations.
+-
+
+https://mathworld.wolfram.com/15Puzzle.html[0]
+
+"The hidden beauty of the A* algorithm" (- watched after solving the coding task but before writing the answers)
+https://www.youtube.com/watch?v=A60q6dcoCjw
 
 **Question**
 Did you encounter any serious problems?
